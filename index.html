@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Countries App</title>
+    <link rel="stylesheet" type="text/css" href="css/style.css"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com"/>
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+    <link
+            href="https://fonts.googleapis.com/css2?family=Handlee&family=Montserrat&display=swap"
+            rel="stylesheet"
+    />
+
+</head>
+<body>
+<h1 class="index-header">Welcome to Country App!</h1>
+<div class="modal modal-country">
+    <img class="country-modal-flag" src="" alt=""/>
+    <h3 class="country-name">Test</h3>
+    <p class="country-details">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Maxime,
+        dolores?
+    </p>
+    <button class="btn-exit btn-exit-info">X</button>
+</div>
+<div class="modal modal-filter">
+    <form class="form-filter-country">
+        <label for="filter-country">Filter by region</label>
+        <select id="filter-country" class="filter-dropdown" name="filter-country-region">
+            <option value="">All</option>
+            <option value="Africa">Africa</option>
+            <option value="Americas">Americas</option>
+            <option value="Antarctic">Antarctic</option>
+            <option value="Asia">Asia</option>
+            <option value="Europe">Europe</option>
+            <option value="Oceania">Oceania</option>
+        </select>
+    </form>
+    <button class="btn-exit btn-exit-filter">X</button>
+</div>
+<div class="modal modal-guess">
+    <form class="guess-form">
+        <meter class="guess-meter" min="0" max="100" low="30" high="60" optimum="100" value="100"></meter>
+        <h3>Guess name of that country</h3>
+        <img class="country-modal-flag-to-guess" src="" alt=""/>
+        <input class="input-guess" type="text">
+        <button class="btn btn-submit-answer">Submit</button>
+        <p class="is-answer-right"></p>
+    </form>
+</div>
+
+<section class="sidebar">
+    <button class="btn-hide">
+        <i class="btn-hide-icon">></i>
+    </button>
+    <h2 class="sidebar-header">Filters</h2>
+    <button class="btn-sidebar btn-show-all">Show all countries</button>
+    <button class="btn-sidebar btn-filters">Filter by region</button>
+
+    <div class="sidebar-filters">
+        <form class="form-filter">
+            <span class="checkbox-region">
+                <input id="africa-checkbox" type="checkbox" value="Africa"/>
+                <label>Africa</label>
+            </span>
+            <span class="checkbox-region">
+                <input id="america-checkbox" type="checkbox" value="Americas"/>
+                <label>Americas</label>
+            </span>
+            <span class="checkbox-region">
+                <input id="antarctica-checkbox" type="checkbox" value="Antarctic"/>
+                <label>Antarctic</label>
+            </span>
+            <span class="checkbox-region">
+                <input class="region-checkbox" id="asia-checkbox" type="checkbox" value="Asia"/>
+                <label>Asia</label>
+            </span>
+            <span class="checkbox-region">
+                <input id="europe-checkbox" type="checkbox" value="Europe"/>
+                <label>Europe</label>
+            </span>
+            <span class="checkbox-region">
+                <input id="oceania-checkbox" type="checkbox" value="Oceania"/>
+                <label>Oceania</label>
+            </span>
+            <button class="btn btn-submit-filter" type="submit">Filter</button>
+        </form>
+    </div>
+    <form class="filter-by-name">
+        <input class="filter-by-name-input" type="text" placeholder="Country name">
+        <span>
+            <label for="radio-includes">Includes</label>
+            <input class="radio-includes-name-filter" id="radio-includes" type="radio" name="radio-name"
+                   value="Includes" checked="true">
+          </span>
+        <span>
+            <label for="radio-starts-with">Starts with</label>
+            <input type="radio" id="radio-starts-with" name="radio-name" value="Starts with">
+          </span>
+        <button class="btn btn-submit-filter">Filter</button>
+    </form>
+    <h2 class="sidebar-header">Quiz</h2>
+    <button class="btn-sidebar btn-guess">Guess country name</button>
+</section>
+<section class="countries" id="main-content"></section>
+
+<script type="text/javascript" src="js/ui.js" type="module"></script>
+</body>
+</html>

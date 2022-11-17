@@ -1,0 +1,277 @@
+:root{
+  --accept: #5fff5f;
+  --decline: #ff4949;
+  --main-color: #F5EFE6;
+  --second-color: #E8DFCA;
+  --sidebar-color: #AEBDCA;
+  --btn: #ffd15b;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: var(--main-color);
+  font-family: "Montserrat", sans-serif;
+}
+
+.btn {
+  width: 4rem;
+  height: 1.75rem;
+  background-color: var(--btn);
+  cursor: pointer;
+  border: .125rem hidden;
+  border-radius: 10px;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9rem;
+}
+
+.btn:hover {
+  background-color: #ff9b29;
+}
+
+.btn-country-info {
+  position: absolute;
+  bottom: 5%;
+  right: 33.5%;
+}
+
+.header {
+  margin: 1rem;
+}
+
+.form-filter{
+  display: flex;
+  flex-direction: column;
+}
+
+.form-filter-country {
+  text-align: center;
+  height: 100%;
+}
+
+.filter-dropdown {
+  width: 10rem;
+  height: 2rem;
+  font-size: 20px;
+  text-align: center;
+}
+
+.filter-by-name{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 1rem 0;
+  gap: .5rem;
+}
+
+.countries {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  font-size: 0.875rem;
+}
+
+.country-info {
+  position: relative;
+  margin: 3rem;
+  background-color: #0000001f;
+  height: 15rem;
+  width: 12rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 1rem 0.25rem #00000050;
+
+}
+
+.country-flag-img {
+  width: 100%;
+  height: 7rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.country-modal-flag-to-guess{
+  height: 12.5rem;
+}
+
+.guess-form{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.modal {
+  width: 40rem;
+  height: 25rem;
+  background-color: var(--second-color);
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 0 1rem 0.5rem #000000;
+  padding: 1rem;
+  z-index: 1;
+  text-align: center;
+}
+
+.modal-active {
+  animation: backwards;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.btn-exit {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  color: #ffffff;
+}
+
+.btn-exit:hover {
+  color: #818181;
+  cursor: pointer;
+}
+
+.disabled-background {
+  -webkit-filter: blur(2px);
+  filter: blur(2px);
+}
+
+.right-answer{
+  background-color: var(--accept);
+  animation: shake 0.5s;
+}
+
+.wrong-answer{
+  background-color: var(--decline);
+  animation: shake 0.5s;
+}
+
+.sidebar{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: fixed;
+  background-color: var(--sidebar-color);
+  height: 100vh;
+  z-index: 5;
+  top: 0;
+  transform: translateX(-100%);
+  transition: transform 0.5s ease;
+  box-shadow: 0 0 1rem 0.25rem #00000050;
+  backdrop-filter: blur(10px);
+}
+
+.sidebar-active {
+  transform: translateX(0%);
+}
+
+.btn-hide{
+  position: absolute;
+  width: 2.5rem;
+  height: 2.5rem;
+  right: -2.5rem;
+  top: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.sidebar-active .btn-hide{
+  transition: transform 0.75s ease;
+  transform: rotate(180deg);
+}
+
+.guess-meter{
+  position: absolute;
+  top: 0;
+  width: 50%;
+}
+
+.index-header{
+  text-align: center;
+}
+
+.btn-sidebar{
+  width: 15rem;
+  height: 3rem;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.125rem;
+}
+
+.btn-sidebar:hover{
+  background-color: #839ab4;
+  font-weight: bold;
+}
+
+.test{
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+}
+
+.sidebar-filters{
+  background-color: #889db6;
+  width: 100%;
+  display: none;
+  z-index: 3;
+}
+
+.sidebar-filters-active{
+  display: block;
+}
+
+.sidebar-active {
+  transform: translateX(0%);
+}
+
+.checkbox-region{
+  padding: .5rem 1.25rem .5rem 0rem;
+  text-align: center;
+}
+
+.checkbox-region:hover{
+  background-color: #F5EFE6;
+  cursor: pointer;
+}
+
+.checkbox-region input{
+  visibility: hidden;
+}
+
+.checked{
+  background-color: #f1dfbd;
+}
+
+.checked:hover{
+  background-color: #d2bb9d;
+}
+
+.checkbox-region label{
+  cursor: pointer;
+}
+
+.btn-submit-filter{
+  text-align: center;
+  width: 100%;
+  border-radius: 0;
+}
+
+.sidebar-header{
+  margin: 1rem 0;
+}
