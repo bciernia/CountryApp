@@ -68,6 +68,34 @@ body {
   gap: .5rem;
 }
 
+.filter-by-name-input{
+  border: 1.5px solid black;
+  border-radius: 10px;
+  font-size: 1rem;
+  height: 2rem;
+  padding: 0 1rem;
+  background-color: var(--sidebar-color);
+}
+
+.filter-by-name-input:active{
+  border: none;
+}
+
+.filter-by-name-label{
+  margin-top: 0.35rem;
+  padding: 0 .25rem;
+  position: absolute;
+  left: 1.125rem;
+  transition: all 0.3s ease;
+  cursor: text;
+  background-color: var(--sidebar-color);
+}
+
+.filter-by-name-input:not(:placeholder-shown) + .filter-by-name-label,
+.filter-by-name-input:focus + .filter-by-name-label{
+  transform: translateY(-1.1rem);
+}
+
 .countries {
   display: flex;
   justify-content: center;
