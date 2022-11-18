@@ -1,17 +1,14 @@
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
-const btnCloseModalFilter = document.querySelector('.btn-exit-filter');
+const btnCloseModalQuizPopulation = document.querySelector('.btn-exit-population');
 const modalCountryInfo = document.querySelector('.modal-country');
-const mainContent = document.querySelector('#main-content');
 const countryDetailsHeader = document.querySelector('.country-name');
 const countryDetailsFlag = document.querySelector('.country-modal-flag');
 const countryDetailsInfo = document.querySelector('.country-details');
 const filterForm = document.querySelector('.form-filter');
 const btnFiltersModal = document.querySelector('.btn-filters');
-const modalFilter = document.querySelector('.modal-filter');
 const filterByNameForm = document.querySelector('.filter-by-name');
-const filterSelect = document.querySelector('[name="filter-country-region"]');
-const btnGuessModal = document.querySelector('.btn-guess');
+const btnGuessModal = document.querySelector('.btn-guess-name');
 const modalGuess = document.querySelector('.modal-guess');
 const guessForm = document.querySelector('.guess-form');
 const btnShowAll = document.querySelector('.btn-show-all');
@@ -21,6 +18,12 @@ const sidebarSection = document.querySelector('.sidebar');
 const guessMeter = document.querySelector('.guess-meter');
 const sidebarFilters = document.querySelector('.sidebar-filters');
 const checkboxRegion = document.getElementsByClassName('checkbox-region');
+const mainSection = document.querySelector('.main-section');
+const btnGuessPopulationModal = document.querySelector('.btn-guess-population');
+const modalQuizPopulation = document.querySelector('.modal-population');
+const modalQuizLeftSection = document.querySelector('.modal-quiz-left');
+const modalQuizRightSection = document.querySelector('.modal-quiz-right');
+const modalQuizPopulationForm = document.querySelector('.modal-population-form');
 
 const checkboxRegionArr = [...checkboxRegion];
 let countryToGuess = {};
@@ -68,7 +71,8 @@ const renderCountries = (countryList) => {
 
     const onBtnCountryClick = () => {
       modalCountryInfo.classList.toggle('modal-active');
-      mainContent.classList.toggle('disabled-background');
+      mainSection.classList.toggle('disabled-background');
+      sidebarSection.classList.toggle('disabled-background');
       countryDetailsFlag.src = flag;
       countryDetailsFlag.alt = name;
       countryDetailsHeader.innerText = name;
@@ -102,12 +106,12 @@ fetch('https://restcountries.com/v3.1/all')
     renderCountries(countryArray);
   });
 
-filterSelect.addEventListener('change', () => {
-  const array = countryArray.filter((country) => country.region.includes(
-    filterSelect.options[filterSelect.selectedIndex].value,
-  ));
-  renderCountries(array);
-});
+// filterSelect.addEventListener('change', () => {
+//   const array = countryArray.filter((country) => country.region.includes(
+//     filterSelect.options[filterSelect.selectedIndex].value,
+//   ));
+//   renderCountries(array);
+// });
 
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -141,8 +145,6 @@ filterForm.addEventListener('submit', (event) => {
     }
     renderCountries(arrayToReturn);
   }
-  // modalFilter.classList.toggle('modal-active');
-  // mainContent.classList.toggle('disabled-background');
 });
 
 filterByNameForm.addEventListener('submit', (event) => {
@@ -168,17 +170,20 @@ filterByNameForm.addEventListener('submit', (event) => {
 
 btnCloseModalCountryInfo.addEventListener('click', () => {
   modalCountryInfo.classList.toggle('modal-active');
-  mainContent.classList.toggle('disabled-background');
+  mainSection.classList.toggle('disabled-background');
+  sidebarSection.classList.toggle('disabled-background');
 });
 
-btnCloseModalFilter.addEventListener('click', () => {
-  modalFilter.classList.toggle('modal-active');
-  mainContent.classList.toggle('disabled-background');
+btnCloseModalQuizPopulation.addEventListener('click', () => {
+  modalQuizPopulation.classList.toggle('modal-active');
+  mainSection.classList.toggle('disabled-background');
+  sidebarSection.classList.toggle('disabled-background');
 });
 
 const hideModal = (modal) => {
   modal.classList.toggle('modal-active');
-  mainContent.classList.toggle('disabled-background');
+  mainSection.classList.toggle('disabled-background');
+  sidebarSection.classList.toggle('disabled-background');
 };
 
 guessForm.addEventListener('submit', (event) => {
@@ -212,9 +217,10 @@ const noAnswer = () => {
 
 btnGuessModal.addEventListener('click', () => {
   modalGuess.classList.toggle('modal-active');
-  mainContent.classList.toggle('disabled-background');
+  mainSection.classList.toggle('disabled-background');
+  sidebarSection.classList.toggle('disabled-background');
   const guessImg = document.querySelector('.country-modal-flag-to-guess');
-  countryToGuess = countryArray[Math.ceil(Math.random() * countryArray.length + 1)];
+  countryToGuess = countryArray[Math.floor(Math.random() * countryArray.length + 1)];
   guessImg.src = countryToGuess.flag;
   guessImg.alt = countryToGuess.name;
   modalGuess.classList.remove('right-answer');
@@ -226,6 +232,7 @@ btnGuessModal.addEventListener('click', () => {
   guessMeter.value = 100;
   clearInterval(intervalId);
   clearTimeout(timeoutId);
+  console.log(countryToGuess.name);
   intervalId = setInterval(() => {
     guessMeter.value -= 1;
   }, 100);
@@ -258,4 +265,97 @@ checkboxRegionArr.forEach((checkboxElement) => {
       checkboxC.nextSibling.checked = true;
     }
   });
+});
+
+const generateCountriesToCompare = (section, country) => {
+  const container = document.createElement('label');
+  const radioInput = document.createElement('input');
+  const flag = document.createElement('img');
+  const countryName = document.createElement('h3');
+  // container.classList.add('checkbox-region');
+  radioInput.type = 'radio';
+  radioInput.name = 'country-population-radio';
+  radioInput.addEventListener('change', () => {
+    if (radioInput.checked) {
+      section.classList.toggle('checked-background');
+    } else {
+      section.classList.toggle('checked-background');
+    }
+  });
+  flag.src = country.flag;
+  flag.alt = country.name;
+  flag.classList.add('country-flag-compare-population');
+  countryName.innerText = country.name;
+  countryName.classList.add('country-name');
+  container.appendChild(radioInput);
+  container.appendChild(flag);
+  container.appendChild(countryName);
+  section.appendChild(container);
+
+  // const countryPopulation = document.createElement('p');
+  // countryPopulation.innerText = `Population: ${firstCountry.population}`;
+  // section.appendChild(countryPopulation);
+};
+
+const clearSection = (sectionsArray) => {
+  sectionsArray.forEach((section) => {
+    section.textContent = '';
+  });
+};
+
+const drawCountriesToQuiz = () => {
+  const firstCountry = countryArray[Math.floor(Math.random() * countryArray.length + 1)];
+  const secondCountry = countryArray[Math.floor(Math.random() * countryArray.length + 1)];
+
+  return [firstCountry, secondCountry];
+};
+
+let firstCountry;
+let secondCountry;
+
+btnGuessPopulationModal.addEventListener('click', () => {
+  modalQuizPopulation.classList.remove('right-answer');
+  modalQuizPopulation.classList.remove('wrong-answer');
+  clearSection([modalQuizLeftSection, modalQuizRightSection]);
+  modalQuizPopulation.classList.toggle('modal-active');
+  mainSection.classList.toggle('disabled-background');
+  sidebarSection.classList.toggle('disabled-background');
+  [firstCountry, secondCountry] = drawCountriesToQuiz();
+  generateCountriesToCompare(modalQuizLeftSection, firstCountry);
+  generateCountriesToCompare(modalQuizRightSection, secondCountry);
+});
+
+const addHiddenInformation = (section, infoToShow) => {
+  const information = document.createElement('p');
+  information.innerText = infoToShow;
+  information.classList.add('info-margin');
+  section.appendChild(information);
+};
+
+modalQuizPopulationForm.addEventListener('submit', (event) => {
+  event.preventDefault();
+  const leftOption = modalQuizLeftSection.querySelector('input');
+  const rightOption = modalQuizRightSection.querySelector('input');
+  const isLeftHigher = firstCountry.population > secondCountry.population;
+
+  modalQuizPopulationForm.querySelector('button').style.display = 'none';
+  addHiddenInformation(modalQuizLeftSection, `Population: ${firstCountry.population}`);
+  addHiddenInformation(modalQuizRightSection, `Population: ${secondCountry.population}`);
+  modalQuizLeftSection.classList.remove('checked-background');
+  modalQuizRightSection.classList.remove('checked-background');
+  if ((isLeftHigher && leftOption.checked) || (!isLeftHigher && rightOption.checked)) {
+    modalQuizPopulation.classList.add('right-answer');
+    addHiddenInformation(modalQuizPopulation, 'Correct!');
+  } else {
+    modalQuizPopulation.classList.add('wrong-answer');
+    addHiddenInformation(modalQuizPopulation, 'Wrong answer!');
+  }
+
+  setTimeout(() => {
+    modalQuizPopulation.removeChild(modalQuizPopulation.lastChild);
+    modalQuizPopulationForm.querySelector('button').style.display = 'inline-block';
+    modalQuizPopulation.classList.toggle('modal-active');
+    mainSection.classList.toggle('disabled-background');
+    sidebarSection.classList.toggle('disabled-background');
+  }, 5000);
 });

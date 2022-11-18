@@ -15,7 +15,6 @@
 
 </head>
 <body>
-<h1 class="index-header">Welcome to Country App!</h1>
 <div class="modal modal-country">
     <img class="country-modal-flag" src="" alt=""/>
     <h3 class="country-name">Test</h3>
@@ -25,30 +24,28 @@
     </p>
     <button class="btn-exit btn-exit-info">X</button>
 </div>
-<div class="modal modal-filter">
-    <form class="form-filter-country">
-        <label for="filter-country">Filter by region</label>
-        <select id="filter-country" class="filter-dropdown" name="filter-country-region">
-            <option value="">All</option>
-            <option value="Africa">Africa</option>
-            <option value="Americas">Americas</option>
-            <option value="Antarctic">Antarctic</option>
-            <option value="Asia">Asia</option>
-            <option value="Europe">Europe</option>
-            <option value="Oceania">Oceania</option>
-        </select>
-    </form>
-    <button class="btn-exit btn-exit-filter">X</button>
-</div>
 <div class="modal modal-guess">
     <form class="guess-form">
         <meter class="guess-meter" min="0" max="100" low="30" high="60" optimum="100" value="100"></meter>
-        <h3>Guess name of that country</h3>
+        <h2>Guess name of that country</h2>
         <img class="country-modal-flag-to-guess" src="" alt=""/>
         <input class="input-guess" type="text">
         <button class="btn btn-submit-answer">Submit</button>
         <p class="is-answer-right"></p>
     </form>
+</div>
+<div class="modal modal-population">
+    <form class="modal-population-form">
+    <div class="modal-quiz-header">
+        <h2>Which country has larger population?</h2>
+    </div>
+    <div class="modal-quiz-left"></div>
+    <div class="modal-quiz-right"></div>
+    <div class="modal-quiz-footer">
+        <button class="btn">Submit</button>
+    </div>
+    </form>
+    <button class="btn-exit btn-exit-population">X</button>
 </div>
 
 <section class="sidebar">
@@ -102,9 +99,13 @@
         <button class="btn btn-submit-filter">Filter</button>
     </form>
     <h2 class="sidebar-header">Quiz</h2>
-    <button class="btn-sidebar btn-guess">Guess country name</button>
+    <button class="btn-sidebar btn-guess-name">Guess country name</button>
+    <button class="btn-sidebar btn-guess-population">Population</button>
 </section>
-<section class="countries" id="main-content"></section>
+<section class="main-section">
+    <h1 class="index-header">Welcome to Country App!</h1>
+    <div class="countries" id="main-content"></div>
+</section>
 
 <script type="text/javascript" src="js/ui.js" type="module"></script>
 </body>

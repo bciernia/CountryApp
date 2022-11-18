@@ -201,6 +201,7 @@ body {
 
 .index-header{
   text-align: center;
+  margin-top: 1rem;
 }
 
 .btn-sidebar{
@@ -216,13 +217,6 @@ body {
 .btn-sidebar:hover{
   background-color: #839ab4;
   font-weight: bold;
-}
-
-.test{
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  z-index: 100;
 }
 
 .sidebar-filters{
@@ -254,6 +248,10 @@ body {
   visibility: hidden;
 }
 
+.modal-population input{
+  visibility: hidden;
+}
+
 .checked{
   background-color: #f1dfbd;
 }
@@ -274,4 +272,46 @@ body {
 
 .sidebar-header{
   margin: 1rem 0;
+}
+
+.modal-quiz-header{
+  grid-area: header;
+}
+
+.modal-quiz-left{
+  grid-area: left;
+  padding: 1.5rem 0.625rem 0 0;
+}
+
+.modal-quiz-right{
+  grid-area: right;
+  padding: 1.5rem 0.625rem 0 0;
+}
+
+.modal-quiz-footer{
+  grid-area: footer;
+}
+
+.modal-population-form{
+  display: grid;
+  grid-template-columns: 50% 50%;
+  grid-template-rows: 15% 70% 15%;
+  grid-template-areas:
+    "header header"
+    "left right"
+    "left right"
+    "footer footer";
+}
+
+.country-flag-compare-population{
+  height: 10rem;
+  width: 17.5rem;
+}
+
+.checked-background{
+  background-color: #a84509;
+}
+
+.info-margin{
+  margin-top: 1rem;
 }
