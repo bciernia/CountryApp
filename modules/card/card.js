@@ -1,4 +1,12 @@
-import { createCountryDetailsBtn } from '../../js/createCountryDetailsBtn.js';
+const createBtn = (text, additionalClasses, onClickHandler) => {
+  const btn = document.createElement('button');
+
+  btn.classList.add(...additionalClasses);
+  btn.textContent = text;
+  btn.addEventListener('click', onClickHandler);
+
+  return btn;
+};
 
 const createImg = (src, alt, additionalClasses) => {
   const img = document.createElement('img');
@@ -31,23 +39,21 @@ const createDiv = (additionalClasses) => {
   return div;
 };
 
-export const createCard = (country, onDetailsBtnClick) => {
-  const {
-    name, capital, region, flag,
-  } = country;
-
+export const createCard = ({
+  img, headerText, additionalText1, additionalText2, action,
+}) => {
   const card = createDiv(['card-info']);
-  const countryFlag = createImg(flag, `${name} flag`, ['card-img']);
-  const countryNameH3 = createH3(name);
-  const countryCapitalH3 = createParagraph(capital || 'None');
-  const countryRegionH3 = createParagraph(region);
-  const btnCountryDetails = createCountryDetailsBtn(onDetailsBtnClick, ['btn', 'btn-country-info']);
+  const imgCard = createImg(img.src, img.alt, ['card-img']);
+  const headerCardText = createH3(headerText);
+  const additionalCardText1 = createParagraph(additionalText1);
+  const additionalCardText2 = createParagraph(additionalText2);
+  const actionCardBtn = createBtn(action.text, action.additionalClasses, action.onClick);
 
-  card.appendChild(countryFlag);
-  card.appendChild(countryNameH3);
-  card.appendChild(countryCapitalH3);
-  card.appendChild(countryRegionH3);
-  card.appendChild(btnCountryDetails);
+  card.appendChild(imgCard);
+  card.appendChild(headerCardText);
+  card.appendChild(additionalCardText1);
+  card.appendChild(additionalCardText2);
+  card.appendChild(actionCardBtn);
 
   return card;
 };

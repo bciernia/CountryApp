@@ -52,8 +52,21 @@ const renderCountries = (countryList) => {
       countryDetailsHeader.innerText = name;
       countryDetailsInfo.innerText = `Capital: ${capital}\nRegion: ${region}`;
     };
-
-    const card = createCard(country, onBtnCountryClick);
+    const cardData = {
+      img: {
+        src: flag,
+        alt: `${name} flag`,
+      },
+      headerText: name,
+      additionalText1: capital || 'None',
+      additionalText2: region,
+      action: {
+        text: 'Details',
+        additionalClasses: ['btn', 'btn-country-info'],
+        onClick: onBtnCountryClick,
+      },
+    };
+    const card = createCard(cardData);
     countrySection.appendChild(card);
   });
 };
