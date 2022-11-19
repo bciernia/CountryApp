@@ -104,25 +104,6 @@ body {
   font-size: 0.875rem;
 }
 
-.country-info {
-  position: relative;
-  margin: 3rem;
-  background-color: #0000001f;
-  height: 15rem;
-  width: 12rem;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 0 1rem 0.25rem #00000050;
-
-}
-
-.country-flag-img {
-  width: 100%;
-  height: 7rem;
-  border-top-left-radius: 10px;
-  border-top-right-radius: 10px;
-}
-
 .country-modal-flag-to-guess{
   height: 12.5rem;
 }
@@ -216,7 +197,7 @@ body {
   font-weight: bold;
 }
 
-.sidebar-active .btn-hide{
+.sidebar-active .btn-hide:focus{
   transition: transform 0.75s ease;
   transform: rotate(180deg);
 }
@@ -277,7 +258,7 @@ body {
 }
 
 .modal-population input{
-  visibility: hidden;
+  visibility: visible;
 }
 
 .checked{

@@ -1,3 +1,5 @@
+import { createCard } from '../modules/card/card.js';
+
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
 const btnCloseModalQuizPopulation = document.querySelector('.btn-exit-population');
@@ -31,16 +33,6 @@ let countryArray = [];
 let intervalId = 0;
 let timeoutId = 0;
 
-const createCountryDetailsBtn = (onClickHandler, additionalClasses) => {
-  const btnCountryDetails = document.createElement('button');
-
-  btnCountryDetails.classList.add(...additionalClasses);
-  btnCountryDetails.textContent = 'Details';
-  btnCountryDetails.addEventListener('click', onClickHandler);
-
-  return btnCountryDetails;
-};
-
 const renderCountries = (countryList) => {
   while (countrySection.firstChild) {
     countrySection.removeChild(countrySection.firstChild);
@@ -50,24 +42,6 @@ const renderCountries = (countryList) => {
     const {
       name, capital, region, flag,
     } = country;
-    const countryFlag = document.createElement('img');
-    const countryNameH3 = document.createElement('h3');
-    const countryRegionH3 = document.createElement('p');
-    const countryCapitalH3 = document.createElement('p');
-    const newDiv = document.createElement('div');
-
-    countryFlag.src = flag;
-    countryFlag.alt = `${name} flag`;
-    countryFlag.classList.add('country-flag-img');
-    countryNameH3.innerText = name;
-
-    countryRegionH3.innerText = region;
-
-    if (capital !== undefined) {
-      countryCapitalH3.innerText = capital;
-    } else {
-      countryCapitalH3.innerText = 'None';
-    }
 
     const onBtnCountryClick = () => {
       modalCountryInfo.classList.toggle('modal-active');
@@ -79,16 +53,8 @@ const renderCountries = (countryList) => {
       countryDetailsInfo.innerText = `Capital: ${capital}\nRegion: ${region}`;
     };
 
-    const btnCountryDetails = createCountryDetailsBtn(onBtnCountryClick, ['btn', 'btn-country-info']);
-
-    newDiv.appendChild(countryFlag);
-    newDiv.appendChild(countryNameH3);
-    newDiv.appendChild(countryCapitalH3);
-    newDiv.appendChild(countryRegionH3);
-    newDiv.appendChild(btnCountryDetails);
-    newDiv.classList.add('country-info');
-
-    countrySection.appendChild(newDiv);
+    const card = createCard(country, onBtnCountryClick);
+    countrySection.appendChild(card);
   });
 };
 
@@ -175,6 +141,9 @@ btnCloseModalCountryInfo.addEventListener('click', () => {
 });
 
 btnCloseModalQuizPopulation.addEventListener('click', () => {
+  clearTimeout(timeoutId);
+  modalQuizPopulation.removeChild(modalQuizPopulation.lastChild);
+  modalQuizPopulationForm.querySelector('button').style.display = 'inline-block';
   modalQuizPopulation.classList.toggle('modal-active');
   mainSection.classList.toggle('disabled-background');
   sidebarSection.classList.toggle('disabled-background');
@@ -299,6 +268,7 @@ const generateCountriesToCompare = (section, country) => {
 
 const clearSection = (sectionsArray) => {
   sectionsArray.forEach((section) => {
+    // eslint-disable-next-line no-param-reassign
     section.textContent = '';
   });
 };
@@ -351,7 +321,7 @@ modalQuizPopulationForm.addEventListener('submit', (event) => {
     addHiddenInformation(modalQuizPopulation, 'Wrong answer!');
   }
 
-  setTimeout(() => {
+  timeoutId = setTimeout(() => {
     modalQuizPopulation.removeChild(modalQuizPopulation.lastChild);
     modalQuizPopulationForm.querySelector('button').style.display = 'inline-block';
     modalQuizPopulation.classList.toggle('modal-active');
