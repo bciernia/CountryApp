@@ -1,4 +1,4 @@
-.country-info {
+.card-info {
     position: relative;
     margin: 3rem;
     background-color: #0000001f;
@@ -9,7 +9,7 @@
     box-shadow: 0 0 1rem 0.25rem #00000050;
 }
 
-.country-flag-img {
+.card-img {
     width: 100%;
     height: 7rem;
     border-top-left-radius: 10px;
