@@ -1,5 +1,6 @@
 import { createCard } from '../modules/card/card.js';
 import { changeDialogueVisibility } from '../modules/dialogue/dialogue.js';
+import { returnFilteredData } from '../modules/filter/filter.js';
 
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
@@ -87,34 +88,10 @@ fetch('https://restcountries.com/v3.1/all')
 
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const arrayToReturn = [];
+  const chosenFilters = [...Array.from(filterForm.getElementsByTagName('input'))];
+  const filteredData = returnFilteredData(chosenFilters, countryArray);
 
-  const checkboxList = [...Array.from(filterForm.getElementsByTagName('input'))];
-
-  const chosenFilter = checkboxList
-    .map((item) => {
-      if (item.checked) {
-        return item.value;
-      }
-      return false;
-    })
-    .filter((item) => {
-      if (item !== 'undefined') {
-        return item;
-      }
-      return false;
-    });
-
-  if (chosenFilter.length === 0) {
-    renderCountries(countryArray);
-  } else {
-    for (let i = 0; i < chosenFilter.length; i += 1) {
-      for (let j = 0; j < countryArray.length; j += 1) {
-        if (countryArray[j].region === chosenFilter[i]) { arrayToReturn.push(countryArray[j]); }
-      }
-    }
-    renderCountries(arrayToReturn);
-  }
+  renderCountries(filteredData);
 });
 
 filterByNameForm.addEventListener('submit', (event) => {
