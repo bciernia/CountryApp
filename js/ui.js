@@ -231,37 +231,30 @@ checkboxRegionArr.forEach((checkboxElement) => {
 });
 
 const generateCountriesToCompare = (section, country) => {
-  const container = document.createElement('label');
+  const container = document.createElement('div');
+  container.classList.add('radio-toolbar');
   const radioInput = document.createElement('input');
+  const radioLabel = document.createElement('label');
   const flag = document.createElement('img');
   const countryName = document.createElement('h3');
-  // container.classList.add('checkbox-region');
   radioInput.type = 'radio';
   radioInput.name = 'country-population-radio';
-  radioInput.addEventListener('change', () => {
-    if (radioInput.checked) {
-      section.classList.toggle('checked-background');
-    } else {
-      section.classList.toggle('checked-background');
-    }
-  });
+  radioInput.id = `${country.name}-radio`;
+  radioLabel.htmlFor = `${country.name}-radio`;
   flag.src = country.flag;
   flag.alt = country.name;
   flag.classList.add('modal-img');
   countryName.innerText = country.name;
   countryName.classList.add('country-name');
+  radioLabel.appendChild(flag);
+  radioLabel.appendChild(countryName);
   container.appendChild(radioInput);
-  container.appendChild(flag);
-  container.appendChild(countryName);
+  container.appendChild(radioLabel);
   section.appendChild(container);
-
-  // const countryPopulation = document.createElement('p');
-  // countryPopulation.innerText = `Population: ${firstCountry.population}`;
-  // section.appendChild(countryPopulation);
 };
 
-const clearSection = (sectionsArray) => {
-  sectionsArray.forEach((section) => {
+const clearSection = (sections) => {
+  sections.forEach((section) => {
     section.textContent = '';
   });
 };
@@ -313,9 +306,6 @@ modalQuizPopulationForm.addEventListener('submit', (event) => {
   timeoutId = setTimeout(() => {
     modalQuizPopulation.removeChild(modalQuizPopulation.lastChild);
     modalQuizPopulationForm.querySelector('button').style.display = 'inline-block';
-    modalQuizPopulation.classList.toggle('modal-active');
-    mainSection.classList.toggle('disabled-background');
-    sidebarSection.classList.toggle('disabled-background');
     changeDialogueVisibility(modalQuizPopulation);
   }, 5000);
 });

@@ -19,11 +19,12 @@
 
 .right-answer{
     background-color: var(--accept);
-    animation: shake 0.5s;
+    z-index: 5;
 }
 
 .wrong-answer{
     background-color: var(--decline);
+    z-index: 5;
 }
 
 .modal-quiz-header{
