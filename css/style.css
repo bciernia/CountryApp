@@ -104,35 +104,11 @@ body {
   font-size: 0.875rem;
 }
 
-.country-modal-flag-to-guess{
-  height: 12.5rem;
-}
-
 .guess-form{
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 1rem;
-}
-
-.modal {
-  width: 40rem;
-  height: 25rem;
-  background-color: var(--second-color);
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%) scale(0);
-  backdrop-filter: blur(10px);
-  box-shadow: 0 0 1rem 0.5rem #000000;
-  padding: 1rem;
-  z-index: 1;
-  text-align: center;
-}
-
-.modal-active {
-  animation: backwards;
-  transform: translate(-50%, -50%) scale(1);
 }
 
 .btn-exit {
@@ -153,16 +129,6 @@ body {
 .disabled-background {
   -webkit-filter: blur(2px);
   filter: blur(2px);
-}
-
-.right-answer{
-  background-color: var(--accept);
-  animation: shake 0.5s;
-}
-
-.wrong-answer{
-  background-color: var(--decline);
-  animation: shake 0.5s;
 }
 
 .sidebar{
@@ -197,7 +163,7 @@ body {
   font-weight: bold;
 }
 
-.sidebar-active .btn-hide:focus{
+.sidebar-active .btn-hide{
   transition: transform 0.75s ease;
   transform: rotate(180deg);
 }
@@ -253,12 +219,10 @@ body {
   cursor: pointer;
 }
 
+
+
 .checkbox-region input{
   visibility: hidden;
-}
-
-.modal-population input{
-  visibility: visible;
 }
 
 .checked{
@@ -281,40 +245,6 @@ body {
 
 .sidebar-header{
   margin: 1rem 0;
-}
-
-.modal-quiz-header{
-  grid-area: header;
-}
-
-.modal-quiz-left{
-  grid-area: left;
-  padding: 1.5rem 0.625rem 0 0;
-}
-
-.modal-quiz-right{
-  grid-area: right;
-  padding: 1.5rem 0.625rem 0 0;
-}
-
-.modal-quiz-footer{
-  grid-area: footer;
-}
-
-.modal-population-form{
-  display: grid;
-  grid-template-columns: 50% 50%;
-  grid-template-rows: 15% 70% 15%;
-  grid-template-areas:
-    "header header"
-    "left right"
-    "left right"
-    "footer footer";
-}
-
-.country-flag-compare-population{
-  height: 10rem;
-  width: 17.5rem;
 }
 
 .checked-background{

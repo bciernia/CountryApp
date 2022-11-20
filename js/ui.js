@@ -1,9 +1,10 @@
 import { createCard } from '../modules/card/card.js';
+import { changeDialogueVisibility } from '../modules/dialogue/dialogue.js';
 
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
 const btnCloseModalQuizPopulation = document.querySelector('.btn-exit-population');
-const modalCountryInfo = document.querySelector('.modal-country');
+const modalCountryInfo = document.querySelector('#modal-country');
 const countryDetailsHeader = document.querySelector('.country-name');
 const countryDetailsFlag = document.querySelector('.country-modal-flag');
 const countryDetailsInfo = document.querySelector('.country-details');
@@ -23,8 +24,8 @@ const checkboxRegion = document.getElementsByClassName('checkbox-region');
 const mainSection = document.querySelector('.main-section');
 const btnGuessPopulationModal = document.querySelector('.btn-guess-population');
 const modalQuizPopulation = document.querySelector('.modal-population');
-const modalQuizLeftSection = document.querySelector('.modal-quiz-left');
-const modalQuizRightSection = document.querySelector('.modal-quiz-right');
+const modalQuizLeftSection = document.querySelector('.modal-quiz-first');
+const modalQuizRightSection = document.querySelector('.modal-quiz-second');
 const modalQuizPopulationForm = document.querySelector('.modal-population-form');
 
 const checkboxRegionArr = [...checkboxRegion];
@@ -44,9 +45,8 @@ const renderCountries = (countryList) => {
     } = country;
 
     const onBtnCountryClick = () => {
-      modalCountryInfo.classList.toggle('modal-active');
-      mainSection.classList.toggle('disabled-background');
-      sidebarSection.classList.toggle('disabled-background');
+      changeDialogueVisibility(modalCountryInfo);
+
       countryDetailsFlag.src = flag;
       countryDetailsFlag.alt = name;
       countryDetailsHeader.innerText = name;
@@ -85,20 +85,11 @@ fetch('https://restcountries.com/v3.1/all')
     renderCountries(countryArray);
   });
 
-// filterSelect.addEventListener('change', () => {
-//   const array = countryArray.filter((country) => country.region.includes(
-//     filterSelect.options[filterSelect.selectedIndex].value,
-//   ));
-//   renderCountries(array);
-// });
-
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const arrayToReturn = [];
 
-  const checkboxList = Array.prototype.slice.call(
-    filterForm.getElementsByTagName('input'),
-  );
+  const checkboxList = [...Array.from(filterForm.getElementsByTagName('input'))];
 
   const chosenFilter = checkboxList
     .map((item) => {
@@ -133,13 +124,15 @@ filterByNameForm.addEventListener('submit', (event) => {
   const valueFromUser = document.querySelector('.filter-by-name-input').value;
   if (document.querySelector('.radio-includes-name-filter').checked === true) {
     countryArray.forEach((country) => {
-      if (country.name.includes(valueFromUser)) {
+      const lowercaseCountryName = (country.name).toLowerCase();
+      if (lowercaseCountryName.includes(valueFromUser.toLowerCase())) {
         arrayToReturn.push(country);
       }
     });
   } else {
     countryArray.forEach((country) => {
-      if (country.name.startsWith(valueFromUser)) {
+      const lowercaseCountryName = (country.name).toLowerCase();
+      if (lowercaseCountryName.startsWith(valueFromUser.toLowerCase())) {
         arrayToReturn.push(country);
       }
     });
@@ -148,25 +141,15 @@ filterByNameForm.addEventListener('submit', (event) => {
 });
 
 btnCloseModalCountryInfo.addEventListener('click', () => {
-  modalCountryInfo.classList.toggle('modal-active');
-  mainSection.classList.toggle('disabled-background');
-  sidebarSection.classList.toggle('disabled-background');
+  changeDialogueVisibility(modalCountryInfo);
 });
 
 btnCloseModalQuizPopulation.addEventListener('click', () => {
   clearTimeout(timeoutId);
   modalQuizPopulation.removeChild(modalQuizPopulation.lastChild);
   modalQuizPopulationForm.querySelector('button').style.display = 'inline-block';
-  modalQuizPopulation.classList.toggle('modal-active');
-  mainSection.classList.toggle('disabled-background');
-  sidebarSection.classList.toggle('disabled-background');
+  changeDialogueVisibility(modalQuizPopulation);
 });
-
-const hideModal = (modal) => {
-  modal.classList.toggle('modal-active');
-  mainSection.classList.toggle('disabled-background');
-  sidebarSection.classList.toggle('disabled-background');
-};
 
 guessForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -185,7 +168,7 @@ guessForm.addEventListener('submit', (event) => {
   inputGuess.style.visibility = 'hidden';
 
   setTimeout(() => {
-    hideModal(modalGuess);
+    changeDialogueVisibility(modalGuess);
   }, 2000);
 });
 
@@ -193,20 +176,18 @@ const noAnswer = () => {
   modalGuess.classList.add('wrong-answer');
   wasAnswerRightInfo.innerText = `Right answer is ${countryToGuess.name}`;
   setTimeout(() => {
-    hideModal(modalGuess);
+    changeDialogueVisibility(modalGuess);
   }, 2000);
 };
 
 btnGuessModal.addEventListener('click', () => {
-  modalGuess.classList.toggle('modal-active');
-  mainSection.classList.toggle('disabled-background');
-  sidebarSection.classList.toggle('disabled-background');
-  const guessImg = document.querySelector('.country-modal-flag-to-guess');
+  changeDialogueVisibility(modalGuess);
+
+  const guessImg = document.querySelector('.modal-img');
   countryToGuess = countryArray[Math.floor(Math.random() * countryArray.length + 1)];
   guessImg.src = countryToGuess.flag;
   guessImg.alt = countryToGuess.name;
-  modalGuess.classList.remove('right-answer');
-  modalGuess.classList.remove('wrong-answer');
+
   wasAnswerRightInfo.innerText = '';
   document.querySelector('.input-guess').style.visibility = 'visible';
   document.querySelector('.input-guess').value = '';
@@ -266,7 +247,7 @@ const generateCountriesToCompare = (section, country) => {
   });
   flag.src = country.flag;
   flag.alt = country.name;
-  flag.classList.add('country-flag-compare-population');
+  flag.classList.add('modal-img');
   countryName.innerText = country.name;
   countryName.classList.add('country-name');
   container.appendChild(radioInput);
@@ -281,7 +262,6 @@ const generateCountriesToCompare = (section, country) => {
 
 const clearSection = (sectionsArray) => {
   sectionsArray.forEach((section) => {
-    // eslint-disable-next-line no-param-reassign
     section.textContent = '';
   });
 };
@@ -297,12 +277,8 @@ let firstCountry;
 let secondCountry;
 
 btnGuessPopulationModal.addEventListener('click', () => {
-  modalQuizPopulation.classList.remove('right-answer');
-  modalQuizPopulation.classList.remove('wrong-answer');
+  changeDialogueVisibility(modalQuizPopulation);
   clearSection([modalQuizLeftSection, modalQuizRightSection]);
-  modalQuizPopulation.classList.toggle('modal-active');
-  mainSection.classList.toggle('disabled-background');
-  sidebarSection.classList.toggle('disabled-background');
   [firstCountry, secondCountry] = drawCountriesToQuiz();
   generateCountriesToCompare(modalQuizLeftSection, firstCountry);
   generateCountriesToCompare(modalQuizRightSection, secondCountry);
@@ -317,16 +293,16 @@ const addHiddenInformation = (section, infoToShow) => {
 
 modalQuizPopulationForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const leftOption = modalQuizLeftSection.querySelector('input');
-  const rightOption = modalQuizRightSection.querySelector('input');
-  const isLeftHigher = firstCountry.population > secondCountry.population;
+  const firstOption = modalQuizLeftSection.querySelector('input');
+  const secondOption = modalQuizRightSection.querySelector('input');
+  const isFirstHigher = firstCountry.population > secondCountry.population;
 
   modalQuizPopulationForm.querySelector('button').style.display = 'none';
   addHiddenInformation(modalQuizLeftSection, `Population: ${firstCountry.population}`);
   addHiddenInformation(modalQuizRightSection, `Population: ${secondCountry.population}`);
   modalQuizLeftSection.classList.remove('checked-background');
   modalQuizRightSection.classList.remove('checked-background');
-  if ((isLeftHigher && leftOption.checked) || (!isLeftHigher && rightOption.checked)) {
+  if ((isFirstHigher && firstOption.checked) || (!isFirstHigher && secondOption.checked)) {
     modalQuizPopulation.classList.add('right-answer');
     addHiddenInformation(modalQuizPopulation, 'Correct!');
   } else {
@@ -340,5 +316,6 @@ modalQuizPopulationForm.addEventListener('submit', (event) => {
     modalQuizPopulation.classList.toggle('modal-active');
     mainSection.classList.toggle('disabled-background');
     sidebarSection.classList.toggle('disabled-background');
+    changeDialogueVisibility(modalQuizPopulation);
   }, 5000);
 });

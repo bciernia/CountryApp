@@ -1,0 +1,65 @@
+.modal {
+    width: 40rem;
+    height: 25rem;
+    background-color: var(--second-color);
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 1rem 0.5rem #000000;
+    padding: 1rem;
+    z-index: 1;
+    text-align: center;
+}
+
+.modal-active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.right-answer{
+    background-color: var(--accept);
+    animation: shake 0.5s;
+}
+
+.wrong-answer{
+    background-color: var(--decline);
+}
+
+.modal-quiz-header{
+    grid-area: header;
+}
+
+.modal-quiz-first{
+    grid-area: first;
+    padding: 1.5rem 0.625rem 0 0;
+}
+
+.modal-quiz-second{
+    grid-area: second;
+    padding: 1.5rem 0.625rem 0 0;
+}
+
+.modal-quiz-footer{
+    grid-area: footer;
+}
+
+.modal-population-form{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: 15% 70% 15%;
+    grid-template-areas:
+    "header header"
+    "first second"
+    "first second"
+    "footer footer";
+}
+
+.modal-population input{
+    visibility: hidden;
+}
+
+.modal-img{
+    height: 10rem;
+    width: 17.5rem;
+}

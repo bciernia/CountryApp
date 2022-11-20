@@ -7,6 +7,8 @@
     <title>Countries App</title>
     <link rel="stylesheet" type="text/css" href="css/style.css"/>
     <link rel="stylesheet" type="text/css" href="modules/card/card.css"/>
+    <link rel="stylesheet" type="text/css" href="modules/dialogue/dialogue.css"/>
+
     <link rel="preconnect" href="https://fonts.googleapis.com"/>
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
     <link
@@ -15,7 +17,7 @@
     />
 </head>
 <body>
-<div class="modal modal-country">
+<div class="modal" id="modal-country">
     <img class="country-modal-flag" src="" alt=""/>
     <h3 class="country-name">Test</h3>
     <p class="country-details">
@@ -28,7 +30,7 @@
     <form class="guess-form">
         <meter class="guess-meter" min="0" max="100" low="30" high="60" optimum="100" value="100"></meter>
         <h2>Guess name of that country</h2>
-        <img class="country-modal-flag-to-guess" src="" alt=""/>
+        <img class="modal-img" src="" alt=""/>
         <input class="input-guess" type="text">
         <button class="btn btn-submit-answer">Submit</button>
         <p class="is-answer-right"></p>
@@ -39,8 +41,8 @@
     <div class="modal-quiz-header">
         <h2>Which country has larger population?</h2>
     </div>
-    <div class="modal-quiz-left"></div>
-    <div class="modal-quiz-right"></div>
+    <div class="modal-quiz-first"></div>
+    <div class="modal-quiz-second"></div>
     <div class="modal-quiz-footer">
         <button class="btn">Submit</button>
     </div>
@@ -87,7 +89,7 @@
     </div>
     <form class="filter-by-name">
         <input class="filter-by-name-input" id="filter-by-name" type="text" placeholder=" ">
-        <label class="filter-by-name-label" for="filter-by-name">Filter by name</label>
+        <label class="filter-by-name-label" for="filter-by-name" autocomplete="off">Filter by name</label>
         <span>
             <label for="radio-includes">Includes</label>
             <input class="radio-includes-name-filter" id="radio-includes" type="radio" name="radio-name"
