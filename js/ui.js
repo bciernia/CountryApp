@@ -297,10 +297,10 @@ modalQuizPopulationForm.addEventListener('submit', (event) => {
   modalQuizRightSection.classList.remove('checked-background');
   if ((isFirstHigher && firstOption.checked) || (!isFirstHigher && secondOption.checked)) {
     modalQuizPopulation.classList.add('right-answer');
-    addHiddenInformation(modalQuizPopulation, 'Correct!');
+    addHiddenInformation(modalQuizPopulation, '\n\nCorrect!');
   } else {
     modalQuizPopulation.classList.add('wrong-answer');
-    addHiddenInformation(modalQuizPopulation, 'Wrong answer!');
+    addHiddenInformation(modalQuizPopulation, '\n\nWrong answer!');
   }
 
   timeoutId = setTimeout(() => {

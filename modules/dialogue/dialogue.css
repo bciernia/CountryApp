@@ -56,11 +56,30 @@
     "footer footer";
 }
 
-.modal-population input{
-    visibility: hidden;
-}
-
 .modal-img{
     height: 10rem;
     width: 17.5rem;
 }
+
+.radio-toolbar input[type="radio"] {
+    display: none;
+}
+
+.radio-toolbar{
+    display: inline-block;
+    font-family: Arial;
+    font-size: 16px;
+    cursor: pointer;
+    height: 100%;
+}
+
+.radio-toolbar label{
+    padding: 2rem 0;
+    cursor: pointer;
+    transition: background-color 0.25s ease-in-out;
+}
+
+.radio-toolbar input[type="radio"]:checked + label{
+    background-color: rgba(255, 143, 42, 0.76);
+}
+
