@@ -270,8 +270,6 @@ modalQuizPopulationForm.addEventListener('submit', (event) => {
   modalQuizPopulationForm.querySelector('button').style.display = 'none';
   addHiddenInformation(modalQuizLeftSection, `Population: ${firstCountry.population}`);
   addHiddenInformation(modalQuizRightSection, `Population: ${secondCountry.population}`);
-  modalQuizLeftSection.classList.remove('checked-background');
-  modalQuizRightSection.classList.remove('checked-background');
   if ((isFirstHigher && firstOption.checked) || (!isFirstHigher && secondOption.checked)) {
     modalQuizPopulation.classList.add('right-answer');
     addHiddenInformation(modalQuizPopulation, '\n\nCorrect!');

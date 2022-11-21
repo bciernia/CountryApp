@@ -9,8 +9,8 @@ const getChosenFilters = (filterOptions) => {
   return filtersToReturn;
 };
 
-export const returnFilteredData = (chosenFilters, dataArray) => {
-  const filters = getChosenFilters(chosenFilters);
+const getDataFromCheckboxFilter = (chosenFilter, dataArray) => {
+  const filters = getChosenFilters(chosenFilter);
   const filteredData = [];
 
   for (let i = 0; i < filters.length; i += 1) {
@@ -22,4 +22,12 @@ export const returnFilteredData = (chosenFilters, dataArray) => {
   }
 
   return filteredData;
+};
+
+export const returnFilteredData = (chosenFilter, dataArray) => {
+  if (typeof chosenFilter === 'string') {
+    // $TODO filtering by name ???
+  } else {
+    return getDataFromCheckboxFilter(chosenFilter, dataArray);
+  }
 };
