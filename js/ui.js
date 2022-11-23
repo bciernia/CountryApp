@@ -1,6 +1,6 @@
-import { createCard } from '../modules/card/card.js';
-import { changeDialogueVisibility } from '../modules/dialogue/dialogue.js';
-import { returnFilteredData } from '../modules/filter/filter.js';
+import { createCard } from '../modules/design-system/card/card.js';
+import { changeDialogueVisibility } from '../modules/design-system/dialogue/dialogue.js';
+import { returnFilteredData } from '../modules/country-app/filter/filter.js';
 
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
