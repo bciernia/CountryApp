@@ -17,7 +17,7 @@ const getSiblingsOfElement = (elem) => {
   return siblings;
 };
 
-const setBackgroundBlured = (sectionsToBlur) => {
+const setBackgroundBlurred = (sectionsToBlur) => {
   sectionsToBlur.forEach((section) => {
     section.classList.toggle('disabled-background');
   });
@@ -32,5 +32,5 @@ export const changeDialogueVisibility = (dialogue) => {
   if (shouldShowModal) {
     dialogue.classList.toggle('modal-active');
   }
-  setBackgroundBlured(sectionsToBlur);
+  setBackgroundBlurred(sectionsToBlur);
 };
