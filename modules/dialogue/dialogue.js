@@ -1,9 +1,14 @@
+/** @description
+ * Function which returns true for elements div...
+ */
+const isContainerNodeType = (element) => element.nodeType === 1;
+
 const getSiblingsOfElement = (elem) => {
   const siblings = [];
   let sibling = elem.parentNode.firstChild;
 
   while (sibling) {
-    if (sibling.nodeType === 1 && sibling !== elem) {
+    if (isContainerNodeType(sibling) && sibling !== elem) {
       siblings.push(sibling);
     }
     sibling = sibling.nextSibling;
