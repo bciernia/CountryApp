@@ -54,65 +54,67 @@
 
 </div>
 
-<section class="sidebar">
-    <button class="btn-hide">
-        <i class="btn-hide-icon">></i>
-    </button>
-    <h2 class="sidebar-header">Filters</h2>
-    <button class="btn-sidebar btn-show-all">Show all countries</button>
-    <button class="btn-sidebar btn-filters">Filter by region</button>
+<div class="content" id="content">
+    <section class="sidebar">
+        <button class="btn-hide">
+            <i class="btn-hide-icon">></i>
+        </button>
+        <h2 class="sidebar-header">Filters</h2>
+        <button class="btn-sidebar btn-show-all">Show all countries</button>
+        <button class="btn-sidebar btn-filters">Filter by region</button>
 
-    <div class="sidebar-filters">
-        <form class="form-filter">
+        <div class="sidebar-filters">
+            <form class="form-filter">
             <span class="checkbox-region">
                 <input id="africa-checkbox" type="checkbox" value="Africa"/>
                 <label>Africa</label>
             </span>
-            <span class="checkbox-region">
+                <span class="checkbox-region">
                 <input id="america-checkbox" type="checkbox" value="Americas"/>
                 <label>Americas</label>
             </span>
-            <span class="checkbox-region">
+                <span class="checkbox-region">
                 <input id="antarctica-checkbox" type="checkbox" value="Antarctic"/>
                 <label>Antarctic</label>
             </span>
-            <span class="checkbox-region">
+                <span class="checkbox-region">
                 <input class="region-checkbox" id="asia-checkbox" type="checkbox" value="Asia"/>
                 <label>Asia</label>
             </span>
-            <span class="checkbox-region">
+                <span class="checkbox-region">
                 <input id="europe-checkbox" type="checkbox" value="Europe"/>
                 <label>Europe</label>
             </span>
-            <span class="checkbox-region">
+                <span class="checkbox-region">
                 <input id="oceania-checkbox" type="checkbox" value="Oceania"/>
                 <label>Oceania</label>
             </span>
-            <button class="btn btn-submit-filter" type="submit">Filter</button>
-        </form>
-    </div>
-    <form class="filter-by-name">
-        <input class="filter-by-name-input" id="filter-by-name" type="text" placeholder=" ">
-        <label class="filter-by-name-label" for="filter-by-name" autocomplete="off">Filter by name</label>
-        <span>
+                <button class="btn btn-submit-filter" type="submit">Filter</button>
+            </form>
+        </div>
+        <form class="filter-by-name">
+            <input class="filter-by-name-input" id="filter-by-name" type="text" placeholder=" ">
+            <label class="filter-by-name-label" for="filter-by-name" autocomplete="off">Filter by name</label>
+            <span>
             <label for="radio-includes">Includes</label>
             <input class="radio-includes-name-filter" id="radio-includes" type="radio" name="radio-name"
                    value="Includes" checked="true">
           </span>
-        <span>
+            <span>
             <label for="radio-starts-with">Starts with</label>
             <input type="radio" id="radio-starts-with" name="radio-name" value="Starts with">
           </span>
-        <button class="btn btn-submit-filter">Filter</button>
-    </form>
-    <h2 class="sidebar-header">Quiz</h2>
-    <button class="btn-sidebar btn-guess-name">Guess country name</button>
-    <button class="btn-sidebar btn-guess-population">Population</button>
-</section>
-<section class="main-section">
-    <h1 class="index-header">Welcome to Country App!</h1>
-    <div class="countries" id="main-content"></div>
-</section>
+            <button class="btn btn-submit-filter">Filter</button>
+        </form>
+        <h2 class="sidebar-header">Quiz</h2>
+        <button class="btn-sidebar btn-guess-name">Guess country name</button>
+        <button class="btn-sidebar btn-guess-population">Population</button>
+    </section>
+    <section class="main-section">
+        <h1 class="index-header">Welcome to Country App!</h1>
+        <div class="countries" id="main-content"></div>
+    </section>
+</div>
 
 <script src="js/ui.js" type="module"></script>
 

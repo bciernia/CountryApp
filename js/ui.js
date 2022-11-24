@@ -22,12 +22,12 @@ const sidebarSection = document.querySelector('.sidebar');
 const guessMeter = document.querySelector('.guess-meter');
 const sidebarFilters = document.querySelector('.sidebar-filters');
 const checkboxRegion = document.getElementsByClassName('checkbox-region');
-const mainSection = document.querySelector('.main-section');
 const btnGuessPopulationModal = document.querySelector('.btn-guess-population');
 const modalQuizPopulation = document.querySelector('.modal-population');
 const modalQuizLeftSection = document.querySelector('.modal-quiz-first');
 const modalQuizRightSection = document.querySelector('.modal-quiz-second');
 const modalQuizPopulationForm = document.querySelector('.modal-population-form');
+const contentSection = document.querySelector('#content');
 
 const checkboxRegionArr = [...checkboxRegion];
 let countryToGuess = {};

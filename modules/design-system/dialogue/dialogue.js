@@ -31,7 +31,7 @@ const setBackgroundBlurred = (sectionsToBlur) => {
 
 export const changeDialogueVisibility = (dialogue) => {
   const sectionsToBlur = getSiblingsOfElement(dialogue);
-  const shouldShowModal = !(dialogue.classList.contains(CSS_CLASSES.BLURRED_BACKGROUND));
+  const shouldShowModal = !(dialogue.classList.contains(CSS_CLASSES.MODAL_ACTIVE));
 
   dialogue.classList.remove(...dialogue.classList);
   dialogue.classList.add(CSS_CLASSES.MODAL);
