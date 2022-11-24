@@ -1,7 +1,7 @@
 const CSS_CLASSES = {
   MODAL: 'modal',
   MODAL_ACTIVE: 'modal-active',
-  BLURRED_BACKGROUND: 'disabled-background',
+  BLURRED_BACKGROUND: 'blurred-background',
 };
 
 /** @description
@@ -30,7 +30,8 @@ const setBackgroundBlurred = (sectionsToBlur) => {
 };
 
 export const changeDialogueVisibility = (dialogue) => {
-  const sectionsToBlur = getSiblingsOfElement(dialogue);
+  const contentToBlur = document.querySelector('#content');
+  contentToBlur.classList.toggle(CSS_CLASSES.BLURRED_BACKGROUND);
   const shouldShowModal = !(dialogue.classList.contains(CSS_CLASSES.MODAL_ACTIVE));
 
   dialogue.classList.remove(...dialogue.classList);
@@ -38,5 +39,4 @@ export const changeDialogueVisibility = (dialogue) => {
   if (shouldShowModal) {
     dialogue.classList.add(CSS_CLASSES.MODAL_ACTIVE);
   }
-  setBackgroundBlurred(sectionsToBlur);
 };
