@@ -8,4 +8,4 @@
 - practice your knowledge by taking country quizzes
 
 
-This site was built using GitHub Pages, check it out here [Country app](https://https://bciernia.github.io/CountryApp/)
+This site was built using GitHub Pages, check it out here [Country app](https://bciernia.github.io/CountryApp/)
