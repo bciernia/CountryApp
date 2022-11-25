@@ -49,12 +49,11 @@ const renderCountries = (countryList) => {
     const onBtnCountryClick = () => {
       changeDialogueVisibility(modalCountryInfo);
 
+      modalCountryInfo.classList.add('modal-grid');
       countryDetailsFlag.src = flag;
       countryDetailsFlag.alt = name;
       countryDetailsHeader.innerText = name;
       countryDetailsInfo.innerText = `Capital: ${capital}\nRegion: ${region}\nPopulation: ${population}`;
-
-      borders.forEach((border) => console.log(border));
     };
     const cardData = {
       img: {
