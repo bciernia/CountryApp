@@ -1,13 +1,15 @@
 import { createCard } from '../modules/design-system/card/card.js';
 import { changeDialogueVisibility } from '../modules/design-system/dialogue/dialogue.js';
-import { returnFilteredData } from '../modules/country-app/filter/filter.js';
+import { returnFilteredData, returnFilteredDataByUserString } from '../modules/country-app/filter/filter.js';
+
+const COUNTRY_URL = 'https://restcountries.com/v3.1/all';
 
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
 const btnCloseModalQuizPopulation = document.querySelector('.btn-exit-population');
 const modalCountryInfo = document.querySelector('#modal-country');
 const countryDetailsHeader = document.querySelector('.country-name');
-const countryDetailsFlag = document.querySelector('.country-modal-flag');
+const countryDetailsFlag = document.querySelector('.country-description-modal-flag');
 const countryDetailsInfo = document.querySelector('.country-details');
 const filterForm = document.querySelector('.form-filter');
 const btnFiltersModal = document.querySelector('.btn-filters');
@@ -27,7 +29,6 @@ const modalQuizPopulation = document.querySelector('.modal-population');
 const modalQuizLeftSection = document.querySelector('.modal-quiz-first');
 const modalQuizRightSection = document.querySelector('.modal-quiz-second');
 const modalQuizPopulationForm = document.querySelector('.modal-population-form');
-const contentSection = document.querySelector('#content');
 
 const checkboxRegionArr = [...checkboxRegion];
 let countryToGuess = {};
@@ -42,7 +43,7 @@ const renderCountries = (countryList) => {
 
   countryList.forEach((country) => {
     const {
-      name, capital, region, flag,
+      name, capital, region, flag, borders, population,
     } = country;
 
     const onBtnCountryClick = () => {
@@ -51,7 +52,9 @@ const renderCountries = (countryList) => {
       countryDetailsFlag.src = flag;
       countryDetailsFlag.alt = name;
       countryDetailsHeader.innerText = name;
-      countryDetailsInfo.innerText = `Capital: ${capital}\nRegion: ${region}`;
+      countryDetailsInfo.innerText = `Capital: ${capital}\nRegion: ${region}\nPopulation: ${population}`;
+
+      borders.forEach((border) => console.log(border));
     };
     const cardData = {
       img: {
@@ -72,7 +75,7 @@ const renderCountries = (countryList) => {
   });
 };
 
-fetch('https://restcountries.com/v3.1/all')
+fetch(COUNTRY_URL)
   .then((response) => response.json())
   .then((data) => {
     countryArray = data.map((country) => ({
@@ -82,9 +85,14 @@ fetch('https://restcountries.com/v3.1/all')
       flag: country.flags.png,
       population: country.population,
       mapPos: country.maps.googleMaps,
+      borders: country.borders,
     }));
     renderCountries(countryArray);
   });
+
+// fetch(COUNTRY_URL)
+//   .then((response) => response.json())
+//   .then((data) => console.log(data));
 
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -96,24 +104,11 @@ filterForm.addEventListener('submit', (event) => {
 
 filterByNameForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const arrayToReturn = [];
 
   const valueFromUser = document.querySelector('.filter-by-name-input').value;
-  if (document.querySelector('.radio-includes-name-filter').checked === true) {
-    countryArray.forEach((country) => {
-      const lowercaseCountryName = (country.name).toLowerCase();
-      if (lowercaseCountryName.includes(valueFromUser.toLowerCase())) {
-        arrayToReturn.push(country);
-      }
-    });
-  } else {
-    countryArray.forEach((country) => {
-      const lowercaseCountryName = (country.name).toLowerCase();
-      if (lowercaseCountryName.startsWith(valueFromUser.toLowerCase())) {
-        arrayToReturn.push(country);
-      }
-    });
-  }
+  const filteringType = document.querySelector('.radio-includes-name-filter').checked;
+  const arrayToReturn = returnFilteredDataByUserString(valueFromUser, countryArray, filteringType);
+
   renderCountries(arrayToReturn);
 });
 
