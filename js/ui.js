@@ -1,6 +1,7 @@
 import { createCard } from '../modules/design-system/card/card.js';
 import { changeDialogueVisibility } from '../modules/design-system/dialogue/dialogue.js';
 import { returnFilteredData, returnFilteredDataByUserString } from '../modules/country-app/filter/filter.js';
+import { generateGuessCountryNameQuiz, checkIfAnswerWasRight } from '../modules/country-app/quiz/quiz.js';
 
 const COUNTRY_URL = 'https://restcountries.com/v3.1/all';
 
@@ -26,8 +27,8 @@ const sidebarFilters = document.querySelector('.sidebar-filters');
 const checkboxRegion = document.getElementsByClassName('checkbox-region');
 const btnGuessPopulationModal = document.querySelector('.btn-guess-population');
 const modalQuizPopulation = document.querySelector('.modal-population');
-const modalQuizLeftSection = document.querySelector('.modal-quiz-first');
-const modalQuizRightSection = document.querySelector('.modal-quiz-second');
+const modalQuizFirstSection = document.querySelector('.modal-quiz-first');
+const modalQuizSecondSection = document.querySelector('.modal-quiz-second');
 const modalQuizPopulationForm = document.querySelector('.modal-population-form');
 
 const checkboxRegionArr = [...checkboxRegion];
@@ -125,17 +126,12 @@ btnCloseModalQuizPopulation.addEventListener('click', () => {
 guessForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const inputGuess = document.querySelector('.input-guess');
+  const userAnswer = inputGuess.value;
 
   clearInterval(intervalId);
   clearTimeout(timeoutId);
 
-  if (inputGuess.value.toLowerCase() === countryToGuess.name.toLowerCase()) {
-    modalGuess.classList.add('right-answer');
-    wasAnswerRightInfo.innerText = 'You are right!';
-  } else {
-    modalGuess.classList.add('wrong-answer');
-    wasAnswerRightInfo.innerText = `Nope, right answer is ${countryToGuess.name}`;
-  }
+  checkIfAnswerWasRight(userAnswer, countryToGuess, modalGuess);
   inputGuess.style.visibility = 'hidden';
 
   setTimeout(() => {
@@ -153,11 +149,13 @@ const noAnswer = () => {
 
 btnGuessModal.addEventListener('click', () => {
   changeDialogueVisibility(modalGuess);
+  //
+  // const guessImg = document.querySelector('.modal-img');
+  // countryToGuess = countryArray[Math.floor(Math.random() * countryArray.length + 1)];
+  // guessImg.src = countryToGuess.flag;
+  // guessImg.alt = countryToGuess.name;
 
-  const guessImg = document.querySelector('.modal-img');
-  countryToGuess = countryArray[Math.floor(Math.random() * countryArray.length + 1)];
-  guessImg.src = countryToGuess.flag;
-  guessImg.alt = countryToGuess.name;
+  countryToGuess = generateGuessCountryNameQuiz(countryArray);
 
   wasAnswerRightInfo.innerText = '';
   document.querySelector('.input-guess').style.visibility = 'visible';
@@ -166,7 +164,6 @@ btnGuessModal.addEventListener('click', () => {
   guessMeter.value = 100;
   clearInterval(intervalId);
   clearTimeout(timeoutId);
-  console.log(countryToGuess.name);
   intervalId = setInterval(() => {
     guessMeter.value -= 1;
   }, 100);
@@ -242,10 +239,10 @@ let secondCountry;
 
 btnGuessPopulationModal.addEventListener('click', () => {
   changeDialogueVisibility(modalQuizPopulation);
-  clearSection([modalQuizLeftSection, modalQuizRightSection]);
+  clearSection([modalQuizFirstSection, modalQuizSecondSection]);
   [firstCountry, secondCountry] = drawCountriesToQuiz();
-  generateCountriesToCompare(modalQuizLeftSection, firstCountry);
-  generateCountriesToCompare(modalQuizRightSection, secondCountry);
+  generateCountriesToCompare(modalQuizFirstSection, firstCountry);
+  generateCountriesToCompare(modalQuizSecondSection, secondCountry);
 });
 
 const addHiddenInformation = (section, infoToShow) => {
@@ -257,13 +254,13 @@ const addHiddenInformation = (section, infoToShow) => {
 
 modalQuizPopulationForm.addEventListener('submit', (event) => {
   event.preventDefault();
-  const firstOption = modalQuizLeftSection.querySelector('input');
-  const secondOption = modalQuizRightSection.querySelector('input');
+  const firstOption = modalQuizFirstSection.querySelector('input');
+  const secondOption = modalQuizSecondSection.querySelector('input');
   const isFirstHigher = firstCountry.population > secondCountry.population;
 
   modalQuizPopulationForm.querySelector('button').style.display = 'none';
-  addHiddenInformation(modalQuizLeftSection, `Population: ${firstCountry.population}`);
-  addHiddenInformation(modalQuizRightSection, `Population: ${secondCountry.population}`);
+  addHiddenInformation(modalQuizFirstSection, `Population: ${firstCountry.population}`);
+  addHiddenInformation(modalQuizSecondSection, `Population: ${secondCountry.population}`);
   if ((isFirstHigher && firstOption.checked) || (!isFirstHigher && secondOption.checked)) {
     modalQuizPopulation.classList.add('right-answer');
     addHiddenInformation(modalQuizPopulation, '\n\nCorrect!');
