@@ -90,10 +90,6 @@ fetch(COUNTRY_URL)
     renderCountries(countryArray);
   });
 
-// fetch(COUNTRY_URL)
-//   .then((response) => response.json())
-//   .then((data) => console.log(data));
-
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const chosenFilters = [...Array.from(filterForm.getElementsByTagName('input'))];
@@ -149,11 +145,6 @@ const noAnswer = () => {
 
 btnGuessModal.addEventListener('click', () => {
   changeDialogueVisibility(modalGuess);
-  //
-  // const guessImg = document.querySelector('.modal-img');
-  // countryToGuess = countryArray[Math.floor(Math.random() * countryArray.length + 1)];
-  // guessImg.src = countryToGuess.flag;
-  // guessImg.alt = countryToGuess.name;
 
   countryToGuess = generateGuessCountryNameQuiz(countryArray);
 
