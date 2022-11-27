@@ -32,7 +32,6 @@ const modalQuizSecondSection = document.querySelector('.modal-quiz-second');
 const modalQuizPopulationForm = document.querySelector('.modal-population-form');
 
 const checkboxRegionArr = [...checkboxRegion];
-let countryToGuess = {};
 let countryArray = [];
 let intervalId = 0;
 let timeoutId = 0;
@@ -127,7 +126,7 @@ guessForm.addEventListener('submit', (event) => {
   clearInterval(intervalId);
   clearTimeout(timeoutId);
 
-  checkIfAnswerWasRight(userAnswer, countryToGuess, modalGuess);
+  checkIfAnswerWasRight(userAnswer, modalGuess);
   inputGuess.style.visibility = 'hidden';
 
   setTimeout(() => {
@@ -135,7 +134,7 @@ guessForm.addEventListener('submit', (event) => {
   }, 2000);
 });
 
-const noAnswer = () => {
+const noAnswer = (countryToGuess) => {
   modalGuess.classList.add('wrong-answer');
   wasAnswerRightInfo.innerText = `Right answer is ${countryToGuess.name}`;
   setTimeout(() => {
@@ -146,7 +145,7 @@ const noAnswer = () => {
 btnGuessModal.addEventListener('click', () => {
   changeDialogueVisibility(modalGuess);
 
-  countryToGuess = generateGuessCountryNameQuiz(countryArray);
+  const countryToGuess = generateGuessCountryNameQuiz(countryArray);
 
   wasAnswerRightInfo.innerText = '';
   document.querySelector('.input-guess').style.visibility = 'visible';
@@ -160,7 +159,7 @@ btnGuessModal.addEventListener('click', () => {
   }, 100);
 
   timeoutId = setTimeout(() => {
-    noAnswer();
+    noAnswer(countryToGuess);
   }, 10000);
 });
 
@@ -181,11 +180,7 @@ checkboxRegionArr.forEach((checkboxElement) => {
   checkboxElement.addEventListener('click', () => {
     checkboxElement.classList.toggle('checked');
     const checkboxC = checkboxElement.firstChild;
-    if (checkboxC.nextSibling.checked) {
-      checkboxC.nextSibling.checked = false;
-    } else {
-      checkboxC.nextSibling.checked = true;
-    }
+    checkboxC.nextSibling.checked = !checkboxC.nextSibling.checked;
   });
 });
 

@@ -1,4 +1,6 @@
-const getCountryToQuiz = (countryArray) => countryArray[Math.floor(Math.random() * countryArray.length + 1)];
+let countryToGuess;
+
+const getRandomCountry = (countryArray) => countryArray[Math.floor(Math.random() * countryArray.length + 1)];
 
 const prepareCountryToShow = (countryToGuess) => {
   const guessImg = document.querySelector('.modal-img');
@@ -7,20 +9,20 @@ const prepareCountryToShow = (countryToGuess) => {
 };
 
 export const generateGuessCountryNameQuiz = (countryArray) => {
-  const countryToGuess = getCountryToQuiz(countryArray);
+  countryToGuess = getRandomCountry(countryArray);
   prepareCountryToShow(countryToGuess);
 
   return countryToGuess;
 };
 
-export const checkIfAnswerWasRight = (userAnswer, countryToGuess, modal) => {
-  const wasAnswerRightInfo = document.querySelector('.is-answer-right');
+export const checkIfAnswerWasRight = (userAnswer, modal) => {
+  const wasAnswerRightParagraph = document.querySelector('.is-answer-right');
 
   if (userAnswer.toLowerCase() === countryToGuess.name.toLowerCase()) {
     modal.classList.add('right-answer');
-    wasAnswerRightInfo.innerText = 'You are right!';
+    wasAnswerRightParagraph.innerText = 'You are right!';
   } else {
     modal.classList.add('wrong-answer');
-    wasAnswerRightInfo.innerText = `Nope, right answer is ${countryToGuess.name}`;
+    wasAnswerRightParagraph.innerText = `Nope, right answer is ${countryToGuess.name}`;
   }
 };
