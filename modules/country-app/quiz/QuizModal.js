@@ -18,6 +18,8 @@ export class QuizModal {
 
   #meter = null;
 
+  #btnSubmitAnswer = null;
+
   constructor(countryQuiz) {
     this.#modalGuess = document.querySelector('.modal-guess');
     this.#guessForm = document.querySelector('.guess-form');
@@ -25,6 +27,7 @@ export class QuizModal {
     this.#wasAnswerRightInfo = document.querySelector('.is-answer-right');
     this.#inputGuess = this.#modalGuess.querySelector('.input-guess');
     this.#guessImg = document.querySelector('.modal-img');
+    this.#btnSubmitAnswer = this.#modalGuess.querySelector('.btn-submit-answer');
 
     const guessMeter = document.querySelector('.guess-meter');
     this.#meter = createCountDownMeter(guessMeter);
@@ -50,6 +53,7 @@ export class QuizModal {
   #noAnswer(countryToGuess) {
     this.#updateContent({ isSuccess: false, textInfo: `Right answer is ${countryToGuess.name}` });
     this.#updateInput({ isVisible: false, value: '' });
+    this.#updateBtn({ isVisible: false });
 
     setTimeout(() => {
       changeDialogueVisibility(this.#modalGuess);
@@ -62,6 +66,7 @@ export class QuizModal {
     const countryToGuess = countryQuiz.generateGuessCountry(this.#countryArray);
     this.#updateCountryFlag(countryToGuess);
 
+    this.#updateBtn({ isVisible: true });
     this.#updateContent({ textInfo: '' });
     this.#updateInput({ isVisible: true, value: '' });
 
@@ -78,11 +83,16 @@ export class QuizModal {
       ? this.#updateContent({ isSuccess: true, textInfo: 'You are right!' })
       : this.#updateContent({ isSuccess: false, textInfo: `Nope, right answer is ${chosenCountry.name}` });
 
+    this.#updateBtn({ isVisible: false });
     this.#updateInput({ isVisible: false, value: '' });
 
     setTimeout(() => {
       changeDialogueVisibility(this.#modalGuess);
     }, 2_000);
+  }
+
+  #updateBtn({ isVisible }) {
+    this.#btnSubmitAnswer.style.visibility = isVisible ? 'visible' : 'hidden';
   }
 
   #updateInput({ isVisible, value }) {
