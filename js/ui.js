@@ -1,7 +1,7 @@
 import { createCard } from '../modules/design-system/card/card.js';
 import { changeDialogueVisibility } from '../modules/design-system/dialogue/dialogue.js';
 import { returnFilteredData, returnFilteredDataByUserString } from '../modules/country-app/filter/filter.js';
-import { generateGuessCountryNameQuiz, checkIfAnswerWasRight } from '../modules/country-app/quiz/quiz.js';
+import { createCountryQuiz } from '../modules/country-app/quiz/quiz.js';
 
 const COUNTRY_URL = 'https://restcountries.com/v3.1/all';
 
@@ -35,6 +35,8 @@ const checkboxRegionArr = [...checkboxRegion];
 let countryArray = [];
 let intervalId = 0;
 let timeoutId = 0;
+
+const countryQuiz = createCountryQuiz();
 
 const renderCountries = (countryList) => {
   while (countrySection.firstChild) {
@@ -126,7 +128,7 @@ guessForm.addEventListener('submit', (event) => {
   clearInterval(intervalId);
   clearTimeout(timeoutId);
 
-  checkIfAnswerWasRight(userAnswer, modalGuess);
+  countryQuiz.submitAnswer(userAnswer, modalGuess);
   inputGuess.style.visibility = 'hidden';
 
   setTimeout(() => {
@@ -145,7 +147,7 @@ const noAnswer = (countryToGuess) => {
 btnGuessModal.addEventListener('click', () => {
   changeDialogueVisibility(modalGuess);
 
-  const countryToGuess = generateGuessCountryNameQuiz(countryArray);
+  const countryToGuess = countryQuiz.generateGuessCountryNameQuiz(countryArray);
 
   wasAnswerRightInfo.innerText = '';
   document.querySelector('.input-guess').style.visibility = 'visible';
