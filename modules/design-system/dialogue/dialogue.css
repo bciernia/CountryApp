@@ -42,7 +42,7 @@
     text-align: left;
 }
 
-.right-answer{
+.correct-answer{
     background-color: var(--accept);
     z-index: 5;
 }

@@ -1,7 +1,7 @@
 import { createCard } from '../modules/design-system/card/card.js';
 import { changeDialogueVisibility } from '../modules/design-system/dialogue/dialogue.js';
 import { returnFilteredData, returnFilteredDataByUserString } from '../modules/country-app/filter/filter.js';
-import {createCountryQuizModal} from "../modules/country-app/quiz/quiz-modal-factory.js";
+import { createCountryQuizModal } from '../modules/country-app/quiz/quiz-modal-factory.js';
 
 const COUNTRY_URL = 'https://restcountries.com/v3.1/all';
 
@@ -86,7 +86,6 @@ fetch(COUNTRY_URL)
     quizModal.updateCountryArray(countryArray);
   });
 
-
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const chosenFilters = [...Array.from(filterForm.getElementsByTagName('input'))];
@@ -115,7 +114,6 @@ btnCloseModalQuizPopulation.addEventListener('click', () => {
   modalQuizPopulationForm.querySelector('button').style.display = 'inline-block';
   changeDialogueVisibility(modalQuizPopulation);
 });
-
 
 btnShowAll.addEventListener('click', (event) => {
   event.preventDefault();
@@ -202,7 +200,7 @@ modalQuizPopulationForm.addEventListener('submit', (event) => {
   addHiddenInformation(modalQuizFirstSection, `Population: ${firstCountry.population}`);
   addHiddenInformation(modalQuizSecondSection, `Population: ${secondCountry.population}`);
   if ((isFirstHigher && firstOption.checked) || (!isFirstHigher && secondOption.checked)) {
-    modalQuizPopulation.classList.add('right-answer');
+    modalQuizPopulation.classList.add('correct-answer');
     addHiddenInformation(modalQuizPopulation, '\n\nCorrect!');
   } else {
     modalQuizPopulation.classList.add('wrong-answer');

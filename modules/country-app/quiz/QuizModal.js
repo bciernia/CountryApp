@@ -44,14 +44,14 @@ export class QuizModal {
 
   #updateContent({ isSuccess, textInfo }) {
     if (isSuccess != undefined) {
-      this.#modalGuess.classList.add(isSuccess ? 'right-answer' : 'wrong-answer');
+      this.#modalGuess.classList.add(isSuccess ? 'correct-answer' : 'wrong-answer');
     }
 
     this.#wasAnswerRightInfo.innerText = textInfo;
   }
 
   #noAnswer(countryToGuess) {
-    this.#updateContent({ isSuccess: false, textInfo: `Right answer is ${countryToGuess.name}` });
+    this.#updateContent({ isSuccess: false, textInfo: `Correct answer is ${countryToGuess.name}` });
     this.#updateInput({ isVisible: false, value: '' });
     this.#updateBtn({ isVisible: false });
 
@@ -80,8 +80,8 @@ export class QuizModal {
     const { isAnswerCorrect, chosenCountry } = countryQuiz.validateAnswer(userAnswer, this);
 
     isAnswerCorrect
-      ? this.#updateContent({ isSuccess: true, textInfo: 'You are right!' })
-      : this.#updateContent({ isSuccess: false, textInfo: `Nope, right answer is ${chosenCountry.name}` });
+      ? this.#updateContent({ isSuccess: true, textInfo: 'Correct answer!' })
+      : this.#updateContent({ isSuccess: false, textInfo: `Correct answer is ${chosenCountry.name}` });
 
     this.#updateBtn({ isVisible: false });
     this.#updateInput({ isVisible: false, value: '' });
