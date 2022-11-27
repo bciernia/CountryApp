@@ -21,22 +21,21 @@
 // }
 
 export class CountryQuiz {
-    #chosenCountry;
+  #chosenCountry;
 
-    #getRandomCountry(countryArray){
-      return countryArray[Math.floor(Math.random() * countryArray.length + 1)];
-    }
+  #getRandomCountry(countryArray) {
+    return countryArray[Math.floor(Math.random() * countryArray.length + 1)];
+  }
 
-    generateGuessCountry(countryArray) {
-        this.#chosenCountry = this.#getRandomCountry(countryArray)
-        return this.#chosenCountry;
-    }
+  generateGuessCountry(countryArray) {
+    this.#chosenCountry = this.#getRandomCountry(countryArray);
+    return this.#chosenCountry;
+  }
 
-    validateAnswer(userAnswer) {
-        return {
-            isAnswerCorrect: userAnswer.toLowerCase() === this.#chosenCountry.name.toLowerCase(),
-            chosenCountry: this.#chosenCountry
-        }
-    }
-
+  validateAnswer(userAnswer) {
+    return {
+      isAnswerCorrect: userAnswer.toLowerCase() === this.#chosenCountry.name.toLowerCase(),
+      chosenCountry: this.#chosenCountry,
+    };
+  }
 }
