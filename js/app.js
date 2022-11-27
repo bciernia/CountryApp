@@ -1,28 +1,23 @@
 import { createCard } from '../modules/design-system/card/card.js';
 import { changeDialogueVisibility } from '../modules/design-system/dialogue/dialogue.js';
 import { returnFilteredData, returnFilteredDataByUserString } from '../modules/country-app/filter/filter.js';
-import { createCountryQuiz } from '../modules/country-app/quiz/quiz.js';
+import {createCountryQuizModal} from "../modules/country-app/quiz/quiz-modal-factory.js";
 
 const COUNTRY_URL = 'https://restcountries.com/v3.1/all';
 
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
 const btnCloseModalQuizPopulation = document.querySelector('.btn-exit-population');
-const modalCountryInfo = document.querySelector('#modal-country');
+const modalCountryInfo = document.getElementById('modal-country');
 const countryDetailsHeader = document.querySelector('.country-name');
 const countryDetailsFlag = document.querySelector('.country-description-modal-flag');
 const countryDetailsInfo = document.querySelector('.country-details');
 const filterForm = document.querySelector('.form-filter');
 const btnFiltersModal = document.querySelector('.btn-filters');
 const filterByNameForm = document.querySelector('.filter-by-name');
-const btnGuessModal = document.querySelector('.btn-guess-name');
-const modalGuess = document.querySelector('.modal-guess');
-const guessForm = document.querySelector('.guess-form');
 const btnShowAll = document.querySelector('.btn-show-all');
-const wasAnswerRightInfo = document.querySelector('.is-answer-right');
 const btnSidebarTransition = document.querySelector('.btn-hide');
 const sidebarSection = document.querySelector('.sidebar');
-const guessMeter = document.querySelector('.guess-meter');
 const sidebarFilters = document.querySelector('.sidebar-filters');
 const checkboxRegion = document.getElementsByClassName('checkbox-region');
 const btnGuessPopulationModal = document.querySelector('.btn-guess-population');
@@ -31,12 +26,11 @@ const modalQuizFirstSection = document.querySelector('.modal-quiz-first');
 const modalQuizSecondSection = document.querySelector('.modal-quiz-second');
 const modalQuizPopulationForm = document.querySelector('.modal-population-form');
 
+const quizModal = createCountryQuizModal();
+
 const checkboxRegionArr = [...checkboxRegion];
 let countryArray = [];
-let intervalId = 0;
-let timeoutId = 0;
-
-const countryQuiz = createCountryQuiz();
+let timeoutId;
 
 const renderCountries = (countryList) => {
   while (countrySection.firstChild) {
@@ -89,7 +83,9 @@ fetch(COUNTRY_URL)
       borders: country.borders,
     }));
     renderCountries(countryArray);
+    quizModal.updateCountryArray(countryArray);
   });
+
 
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
@@ -120,50 +116,6 @@ btnCloseModalQuizPopulation.addEventListener('click', () => {
   changeDialogueVisibility(modalQuizPopulation);
 });
 
-guessForm.addEventListener('submit', (event) => {
-  event.preventDefault();
-  const inputGuess = document.querySelector('.input-guess');
-  const userAnswer = inputGuess.value;
-
-  clearInterval(intervalId);
-  clearTimeout(timeoutId);
-
-  countryQuiz.submitAnswer(userAnswer, modalGuess);
-  inputGuess.style.visibility = 'hidden';
-
-  setTimeout(() => {
-    changeDialogueVisibility(modalGuess);
-  }, 2000);
-});
-
-const noAnswer = (countryToGuess) => {
-  modalGuess.classList.add('wrong-answer');
-  wasAnswerRightInfo.innerText = `Right answer is ${countryToGuess.name}`;
-  setTimeout(() => {
-    changeDialogueVisibility(modalGuess);
-  }, 2000);
-};
-
-btnGuessModal.addEventListener('click', () => {
-  changeDialogueVisibility(modalGuess);
-
-  const countryToGuess = countryQuiz.generateGuessCountryNameQuiz(countryArray);
-
-  wasAnswerRightInfo.innerText = '';
-  document.querySelector('.input-guess').style.visibility = 'visible';
-  document.querySelector('.input-guess').value = '';
-
-  guessMeter.value = 100;
-  clearInterval(intervalId);
-  clearTimeout(timeoutId);
-  intervalId = setInterval(() => {
-    guessMeter.value -= 1;
-  }, 100);
-
-  timeoutId = setTimeout(() => {
-    noAnswer(countryToGuess);
-  }, 10000);
-});
 
 btnShowAll.addEventListener('click', (event) => {
   event.preventDefault();

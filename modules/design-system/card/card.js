@@ -1,4 +1,4 @@
-const createBtn = (text, additionalClasses, onClickHandler) => {
+export const createBtn = (text, additionalClasses, onClickHandler) => {
   const btn = document.createElement('button');
 
   btn.classList.add(...additionalClasses);
@@ -8,7 +8,7 @@ const createBtn = (text, additionalClasses, onClickHandler) => {
   return btn;
 };
 
-const createImg = (src, alt, additionalClasses) => {
+export const createImg = (src, alt, additionalClasses) => {
   const img = document.createElement('img');
 
   img.src = src;
