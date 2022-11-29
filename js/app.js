@@ -2,8 +2,7 @@ import { createCard } from '../modules/design-system/card/card.js';
 import { changeDialogueVisibility } from '../modules/design-system/dialogue/dialogue.js';
 import { returnFilteredData, returnFilteredDataByUserString } from '../modules/country-app/filter/filter.js';
 import { createCountryQuizModal } from '../modules/country-app/quiz/quiz-modal-factory.js';
-
-const COUNTRY_URL = 'https://restcountries.com/v3.1/all';
+import { fetchCountries } from '../modules/country-app/data/data.js';
 
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
@@ -28,10 +27,9 @@ const modalQuizPopulationForm = document.querySelector('.modal-population-form')
 
 const quizModal = createCountryQuizModal();
 
-const checkboxRegionArr = [...checkboxRegion];
 let countryArray = [];
-let timeoutId;
 
+const checkboxRegionArr = [...checkboxRegion];
 const renderCountries = (countryList) => {
   while (countrySection.firstChild) {
     countrySection.removeChild(countrySection.firstChild);
@@ -70,21 +68,13 @@ const renderCountries = (countryList) => {
   });
 };
 
-fetch(COUNTRY_URL)
-  .then((response) => response.json())
-  .then((data) => {
-    countryArray = data.map((country) => ({
-      name: country.name.common,
-      capital: country.capital && country.capital[0],
-      region: country.region,
-      flag: country.flags.png,
-      population: country.population,
-      mapPos: country.maps.googleMaps,
-      borders: country.borders,
-    }));
-    renderCountries(countryArray);
-    quizModal.updateCountryArray(countryArray);
-  });
+fetchCountries().then((data) => {
+  renderCountries(data);
+  quizModal.updateCountryArray(data);
+  countryArray = data;
+});
+
+let timeoutId;
 
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
