@@ -37,9 +37,39 @@
     flex-wrap: wrap;
 }
 
+.border-country-container{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .border-country-flag-desc{
-    width: 100px;
-    height: 50px;
+    width: 6.25rem;
+    height: 3.125rem;
+}
+
+.tooltip{
+    position: absolute;
+    background-color: #ffd15b;
+    padding: 0.125rem;
+    border-radius: 10px;
+    opacity: 0;
+    top: 3.5rem;
+    transition: opacity 0.125s ease-out;
+}
+
+.border-country-flag-desc:hover + p{
+    opacity: 1;
+    z-index: 100;
+}
+
+.border-info{
+    position: absolute;
+    top: 13.5rem;
+    font-size: 1.25rem;
+    font-weight: bold;
 }
 
 .modal-active {
@@ -48,7 +78,7 @@
 
 .country-description-modal-flag{
     width: 20rem;
-    height: 14rem;
+    height: 12rem;
 }
 
 .country-name{

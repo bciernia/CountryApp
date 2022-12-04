@@ -46,15 +46,26 @@ const renderCountries = (countryList) => {
       countryDetailsInfo.innerText = `Capital: ${capital}\nRegion: ${region}\nPopulation: ${population}`;
 
       if (country.borders !== undefined) {
+        const text = document.createElement('p');
+        text.innerText = 'Border countries';
+        text.classList.add('border-info');
+        countryBorderCountries.appendChild(text);
         modalCountryInfo.classList.add('modal-grid');
         modalCountryInfo.querySelector('.country-info').classList.remove('country-without-bordering-countries');
         countryList.forEach((borderingCountry) => {
           if (borders.includes(borderingCountry.cca3)) {
+            const borderCountryContainer = document.createElement('div');
             const borderCountryFlag = document.createElement('img');
+            const borderCountryName = document.createElement('p');
             borderCountryFlag.src = borderingCountry.flag;
             borderCountryFlag.alt = borderingCountry.name;
+            borderCountryContainer.classList.add('border-country-container');
             borderCountryFlag.classList.add('border-country-flag-desc');
-            countryBorderCountries.appendChild(borderCountryFlag);
+            borderCountryName.innerText = borderingCountry.name;
+            borderCountryName.classList.add('tooltip');
+            borderCountryContainer.appendChild(borderCountryFlag);
+            borderCountryContainer.appendChild(borderCountryName);
+            countryBorderCountries.appendChild(borderCountryContainer);
           }
         });
       } else {
