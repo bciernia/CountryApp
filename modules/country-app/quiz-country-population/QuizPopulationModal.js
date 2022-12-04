@@ -40,7 +40,6 @@ export class QuizPopulationModal {
     });
 
     this.#btnCloseModal.addEventListener('click', () => {
-      // this.#modal.removeChild(this.#modal.lastChild);
       this.#guessForm.querySelector('button').style.display = 'inline-block';
       changeDialogueVisibility(this.#modal);
     });

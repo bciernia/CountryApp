@@ -11,10 +11,6 @@ export class CountryPopulationQuiz {
     return this.#firstCountry.population > this.#secondCountry.population;
   }
 
-  #isSecondCountryDifferent() {
-    return this.#firstCountry !== this.#secondCountry;
-  }
-
   generateCountriesToCompare(countryArray) {
     this.#firstCountry = this.#getRandomCountry(countryArray);
     this.#secondCountry = this.#getRandomCountry(countryArray);
@@ -22,7 +18,6 @@ export class CountryPopulationQuiz {
     return [this.#firstCountry, this.#secondCountry];
   }
 
-  // ((isFirstHigher && firstOption.checked) || (!isFirstHigher && secondOption.checked)) {
   validateAnswer(isFirstCountrychosen) {
     const correctAnswer = this.#getCountryWithHigherPopulation();
 

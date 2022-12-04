@@ -71,8 +71,6 @@ fetchCountries().then((data) => {
   countryArray = data;
 });
 
-let timeoutId;
-
 filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const chosenFilters = [...Array.from(filterForm.getElementsByTagName('input'))];
