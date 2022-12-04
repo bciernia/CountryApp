@@ -11,6 +11,7 @@ const modalCountryInfo = document.getElementById('modal-country');
 const countryDetailsHeader = document.querySelector('.country-name');
 const countryDetailsFlag = document.querySelector('.country-description-modal-flag');
 const countryDetailsInfo = document.querySelector('.country-details');
+const countryBorderCountries = document.querySelector('.border-countries');
 const filterForm = document.querySelector('.form-filter');
 const btnFiltersModal = document.querySelector('.btn-filters');
 const filterByNameForm = document.querySelector('.filter-by-name');
@@ -39,11 +40,27 @@ const renderCountries = (countryList) => {
     const onBtnCountryClick = () => {
       changeDialogueVisibility(modalCountryInfo);
 
-      modalCountryInfo.classList.add('modal-grid');
       countryDetailsFlag.src = flag;
       countryDetailsFlag.alt = name;
       countryDetailsHeader.innerText = name;
       countryDetailsInfo.innerText = `Capital: ${capital}\nRegion: ${region}\nPopulation: ${population}`;
+
+      if (country.borders !== undefined) {
+        modalCountryInfo.classList.add('modal-grid');
+        modalCountryInfo.querySelector('.country-info').classList.remove('country-without-bordering-countries');
+        countryList.forEach((borderingCountry) => {
+          if (borders.includes(borderingCountry.cca3)) {
+            const borderCountryFlag = document.createElement('img');
+            borderCountryFlag.src = borderingCountry.flag;
+            borderCountryFlag.alt = borderingCountry.name;
+            borderCountryFlag.classList.add('border-country-flag-desc');
+            countryBorderCountries.appendChild(borderCountryFlag);
+          }
+        });
+      } else {
+        modalCountryInfo.querySelector('.country-info').classList.add('country-without-bordering-countries');
+        countryBorderCountries.innerText = 'Country doesn\'t border other countries';
+      }
     };
     const cardData = {
       img: {
@@ -91,6 +108,7 @@ filterByNameForm.addEventListener('submit', (event) => {
 
 btnCloseModalCountryInfo.addEventListener('click', () => {
   changeDialogueVisibility(modalCountryInfo);
+  countryBorderCountries.innerText = '';
 });
 
 btnShowAll.addEventListener('click', (event) => {

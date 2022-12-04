@@ -19,10 +19,27 @@
     grid-template-rows: 62.5% 37.5%;
 }
 
-.grid-test{
+.country-without-bordering-countries{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.border-countries{
     grid-column: 1/3;
     grid-row: 2/3;
-    background-color: #839ab4;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.border-country-flag-desc{
+    width: 100px;
+    height: 50px;
 }
 
 .modal-active {
@@ -30,8 +47,8 @@
 }
 
 .country-description-modal-flag{
-    width: auto;
-    height: auto;
+    width: 20rem;
+    height: 14rem;
 }
 
 .country-name{

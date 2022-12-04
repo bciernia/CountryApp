@@ -10,6 +10,7 @@ const mapDataToCountryArray = (data) => data.map((country) => ({
   population: country.population,
   mapPos: country.maps.googleMaps,
   borders: country.borders,
+  cca3: country.cca3,
 }));
 
 export const fetchCountries = () => fetchJson(COUNTRY_URL, mapDataToCountryArray);
