@@ -56,6 +56,7 @@
     padding: 0.125rem;
     border-radius: 10px;
     opacity: 0;
+    padding: .125rem .375rem;
     top: 3.5rem;
     transition: opacity 0.125s ease-out;
 }
