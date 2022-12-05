@@ -27,12 +27,12 @@ const quizPopulationModal = createCountryPopulationQuizModal();
 let countryArray = [];
 
 const checkboxRegionArr = [...checkboxRegion];
-const renderCountries = (countryList) => {
+const renderCountries = (countriesToShow, countryList) => {
   while (countrySection.firstChild) {
     countrySection.removeChild(countrySection.firstChild);
   }
 
-  countryList.forEach((country) => {
+  countriesToShow.forEach((country) => {
     const {
       name, capital, region, flag, borders, population,
     } = country;
@@ -93,10 +93,10 @@ const renderCountries = (countryList) => {
 };
 
 fetchCountries().then((data) => {
-  renderCountries(data);
+  countryArray = data;
+  renderCountries(data, countryArray);
   quizModal.updateCountryArray(data);
   quizPopulationModal.updateCountryArray(data);
-  countryArray = data;
 });
 
 filterForm.addEventListener('submit', (event) => {
@@ -104,7 +104,7 @@ filterForm.addEventListener('submit', (event) => {
   const chosenFilters = [...Array.from(filterForm.getElementsByTagName('input'))];
   const filteredData = returnFilteredData(chosenFilters, countryArray);
 
-  renderCountries(filteredData);
+  renderCountries(filteredData, countryArray);
 });
 
 filterByNameForm.addEventListener('submit', (event) => {
@@ -114,7 +114,7 @@ filterByNameForm.addEventListener('submit', (event) => {
   const filteringType = document.querySelector('.radio-includes-name-filter').checked;
   const arrayToReturn = returnFilteredDataByUserString(valueFromUser, countryArray, filteringType);
 
-  renderCountries(arrayToReturn);
+  renderCountries(arrayToReturn, countryArray);
 });
 
 btnCloseModalCountryInfo.addEventListener('click', () => {
@@ -124,7 +124,7 @@ btnCloseModalCountryInfo.addEventListener('click', () => {
 
 btnShowAll.addEventListener('click', (event) => {
   event.preventDefault();
-  renderCountries(countryArray);
+  renderCountries(countryArray, countryArray);
 });
 
 btnSidebarTransition.addEventListener('click', () => {
