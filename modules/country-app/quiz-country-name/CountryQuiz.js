@@ -32,9 +32,9 @@ export class CountryQuiz {
     return this.#chosenCountry;
   }
 
-  validateAnswer(userAnswer) {
+  validateAnswer(countryName) {
     return {
-      isAnswerCorrect: userAnswer.toLowerCase() === this.#chosenCountry.name.toLowerCase(),
+      isAnswerCorrect: countryName.toLowerCase() === this.#chosenCountry.name.toLowerCase(),
       chosenCountry: this.#chosenCountry,
     };
   }

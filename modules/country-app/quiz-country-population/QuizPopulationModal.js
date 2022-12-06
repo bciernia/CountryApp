@@ -1,9 +1,10 @@
 import { changeDialogueVisibility } from '../../design-system/dialogue/dialogue.js';
+import { createH3, createImg, createRadio } from '../../design-system/core/core.js';
 
 export class QuizPopulationModal {
   #countryArray = [];
 
-  #modal = null;
+  #modal;
 
   #guessForm = null;
 
@@ -58,20 +59,14 @@ export class QuizPopulationModal {
     section.appendChild(information);
   }
 
-  #generateCountriesToCompare(section, country) {
+  #generateCountryToCompare(section, country) {
     const container = document.createElement('div');
     container.classList.add('radio-toolbar');
-    const radioInput = document.createElement('input');
+    const radioInput = createRadio(`${country.name}-radio`, 'country-population-radio', country.name);
     const radioLabel = document.createElement('label');
-    const flag = document.createElement('img');
+    const flag = createImg(country.flag, country.name, ['modal-img']);
     const countryName = document.createElement('h3');
-    radioInput.type = 'radio';
-    radioInput.name = 'country-population-radio';
-    radioInput.id = `${country.name}-radio`;
     radioLabel.htmlFor = `${country.name}-radio`;
-    flag.src = country.flag;
-    flag.alt = country.name;
-    flag.classList.add('modal-img');
     countryName.innerText = country.name;
     countryName.classList.add('country-name');
     radioLabel.appendChild(flag);
@@ -94,14 +89,14 @@ export class QuizPopulationModal {
     this.#clearSection([this.#firstCountrySection, this.#secondCountrySection]);
     [this.#firstCountry, this.#secondCountry] = countryPopulationQuiz.generateCountriesToCompare(this.#countryArray);
 
-    this.#generateCountriesToCompare(this.#firstCountrySection, this.#firstCountry);
-    this.#generateCountriesToCompare(this.#secondCountrySection, this.#secondCountry);
+    this.#generateCountryToCompare(this.#firstCountrySection, this.#firstCountry);
+    this.#generateCountryToCompare(this.#secondCountrySection, this.#secondCountry);
   }
 
   #checkIfAnswerWasRight(countryPopulationQuiz) {
-    const firstOption = this.#firstCountrySection.querySelector('input');
+    const checkedCountry = this.#modal.querySelector('[name=country-population-radio]:checked')?.value;
 
-    const isAnswerCorrect = countryPopulationQuiz.validateAnswer(firstOption.checked);
+    const isAnswerCorrect = countryPopulationQuiz.validateAnswer(checkedCountry);
 
     this.#addHiddenInformation(this.#firstCountrySection, `Population: ${this.#firstCountry.population}`);
     this.#addHiddenInformation(this.#secondCountrySection, `Population: ${this.#secondCountry.population}`);
