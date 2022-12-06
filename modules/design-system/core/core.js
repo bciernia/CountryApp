@@ -18,23 +18,25 @@ export const createImg = (src, alt, additionalClasses) => {
   return img;
 };
 
-export const createH3 = (text) => {
+export const createH3 = (text, additionalClasses = []) => {
   const h3 = document.createElement('h3');
 
   h3.innerText = text;
+  h3.classList.add(...additionalClasses);
 
   return h3;
 };
 
-export const createParagraph = (text) => {
+export const createParagraph = (text, additionalClasses = []) => {
   const p = document.createElement('p');
 
   p.innerText = text;
+  p.classList.add(...additionalClasses);
 
   return p;
 };
 
-export const createDiv = (additionalClasses) => {
+export const createDiv = (additionalClasses = []) => {
   const div = document.createElement('div');
 
   div.classList.add(...additionalClasses);
@@ -51,4 +53,12 @@ export const createRadio = (id, name, value) => {
   radio.type = 'radio';
 
   return radio;
+};
+
+export const createLabel = (forInput) => {
+  const label = document.createElement('label');
+
+  label.htmlFor = forInput;
+
+  return label;
 };

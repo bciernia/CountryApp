@@ -1,5 +1,8 @@
 import { changeDialogueVisibility } from '../../design-system/dialogue/dialogue.js';
-import { createH3, createImg, createRadio } from '../../design-system/core/core.js';
+import {
+  createDiv,
+  createH3, createImg, createLabel, createRadio,
+} from '../../design-system/core/core.js';
 
 export class QuizPopulationModal {
   #countryArray = [];
@@ -60,15 +63,12 @@ export class QuizPopulationModal {
   }
 
   #generateCountryToCompare(section, country) {
-    const container = document.createElement('div');
-    container.classList.add('radio-toolbar');
+    const container = createDiv(['radio-toolbar']);
     const radioInput = createRadio(`${country.name}-radio`, 'country-population-radio', country.name);
-    const radioLabel = document.createElement('label');
+    const radioLabel = createLabel(`${country.name}-radio`);
     const flag = createImg(country.flag, country.name, ['modal-img']);
-    const countryName = document.createElement('h3');
-    radioLabel.htmlFor = `${country.name}-radio`;
-    countryName.innerText = country.name;
-    countryName.classList.add('country-name');
+    const countryName = createH3(country.name);
+
     radioLabel.appendChild(flag);
     radioLabel.appendChild(countryName);
     container.appendChild(radioInput);
