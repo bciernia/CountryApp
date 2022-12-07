@@ -55,10 +55,10 @@ export const createRadio = (id, name, value) => {
   return radio;
 };
 
-export const createLabel = (forInput) => {
+export const createLabel = (inputName) => {
   const label = document.createElement('label');
 
-  label.htmlFor = forInput;
+  label.htmlFor = inputName;
 
   return label;
 };
