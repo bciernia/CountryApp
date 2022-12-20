@@ -4,6 +4,7 @@ import { returnFilteredData, returnFilteredDataByUserString } from '../modules/c
 import { createCountryQuizModal } from '../modules/country-app/quiz-country-name/quiz-modal-factory.js';
 import { fetchCountries } from '../modules/country-app/data/data.js';
 import { createCountryPopulationQuizModal } from '../modules/country-app/quiz-country-population/quiz-population-factory.js';
+import { CountryStorage } from '../modules/country-app/country-storage/CountryStorage.js';
 
 const countrySection = document.querySelector('.countries');
 const btnCloseModalCountryInfo = document.querySelector('.btn-exit-info');
@@ -27,12 +28,12 @@ const quizPopulationModal = createCountryPopulationQuizModal();
 let countryArray = [];
 
 const checkboxRegionArr = [...checkboxRegion];
-const renderCountries = (countriesToShow, countryList) => {
+const renderCountries = (countryStorage) => {
   while (countrySection.firstChild) {
     countrySection.removeChild(countrySection.firstChild);
   }
 
-  countriesToShow.forEach((country) => {
+  countryStorage.getAll().forEach((country) => {
     const {
       name, capital, region, flag, borders, population,
     } = country;
@@ -52,21 +53,19 @@ const renderCountries = (countriesToShow, countryList) => {
         countryBorderCountries.appendChild(text);
         modalCountryInfo.classList.add('modal-grid');
         modalCountryInfo.querySelector('.country-info').classList.remove('country-without-bordering-countries');
-        countryList.forEach((borderingCountry) => {
-          if (borders.includes(borderingCountry.cca3)) {
-            const borderCountryContainer = document.createElement('div');
-            const borderCountryFlag = document.createElement('img');
-            const borderCountryName = document.createElement('p');
-            borderCountryFlag.src = borderingCountry.flag;
-            borderCountryFlag.alt = borderingCountry.name;
-            borderCountryContainer.classList.add('border-country-container');
-            borderCountryFlag.classList.add('border-country-flag-desc');
-            borderCountryName.innerText = borderingCountry.name;
-            borderCountryName.classList.add('tooltip');
-            borderCountryContainer.appendChild(borderCountryFlag);
-            borderCountryContainer.appendChild(borderCountryName);
-            countryBorderCountries.appendChild(borderCountryContainer);
-          }
+        countryStorage.getByCca3(borders).forEach((borderingCountry) => {
+          const borderCountryContainer = document.createElement('div');
+          const borderCountryFlag = document.createElement('img');
+          const borderCountryName = document.createElement('p');
+          borderCountryFlag.src = borderingCountry.flag;
+          borderCountryFlag.alt = borderingCountry.name;
+          borderCountryContainer.classList.add('border-country-container');
+          borderCountryFlag.classList.add('border-country-flag-desc');
+          borderCountryName.innerText = borderingCountry.name;
+          borderCountryName.classList.add('tooltip');
+          borderCountryContainer.appendChild(borderCountryFlag);
+          borderCountryContainer.appendChild(borderCountryName);
+          countryBorderCountries.appendChild(borderCountryContainer);
         });
       } else {
         modalCountryInfo.querySelector('.country-info').classList.add('country-without-bordering-countries');
@@ -94,7 +93,8 @@ const renderCountries = (countriesToShow, countryList) => {
 
 fetchCountries().then((data) => {
   countryArray = data;
-  renderCountries(data, countryArray);
+  const countryStorage = new CountryStorage(data);
+  renderCountries(countryStorage);
   quizModal.updateCountryArray(data);
   quizPopulationModal.updateCountryArray(data);
 });
