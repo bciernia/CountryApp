@@ -103,8 +103,9 @@ filterForm.addEventListener('submit', (event) => {
   event.preventDefault();
   const chosenFilters = [...Array.from(filterForm.getElementsByTagName('input'))];
   const filteredData = returnFilteredData(chosenFilters, countryArray);
+  const countryStorage = new CountryStorage(filteredData);
 
-  renderCountries(filteredData, countryArray);
+  renderCountries(countryStorage);
 });
 
 filterByNameForm.addEventListener('submit', (event) => {
@@ -113,8 +114,9 @@ filterByNameForm.addEventListener('submit', (event) => {
   const valueFromUser = document.querySelector('.filter-by-name-input').value;
   const filteringType = document.querySelector('.radio-includes-name-filter').checked;
   const arrayToReturn = returnFilteredDataByUserString(valueFromUser, countryArray, filteringType);
+  const countryStorage = new CountryStorage(arrayToReturn);
 
-  renderCountries(arrayToReturn, countryArray);
+  renderCountries(countryStorage);
 });
 
 btnCloseModalCountryInfo.addEventListener('click', () => {
@@ -124,7 +126,8 @@ btnCloseModalCountryInfo.addEventListener('click', () => {
 
 btnShowAll.addEventListener('click', (event) => {
   event.preventDefault();
-  renderCountries(countryArray, countryArray);
+  const countryStorage = new CountryStorage(countryArray);
+  renderCountries(countryStorage);
 });
 
 btnSidebarTransition.addEventListener('click', () => {
